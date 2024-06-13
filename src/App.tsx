@@ -6,7 +6,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p> Hello Galleon </p>
+        <h1> Hello World! </h1>
+        <h2>Welcome to Galleon Legacy Version. </h2>
       </header>
     </div>
   );

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "description": "An open-source wallet framework for the Tezos blockchain.",
-  "main": "./src/main.js",
+  "main": "./public/electron.js",
+  "type": "module",
   "homepage": ".",
   "repository": {
     "type": "git",
@@ -17,13 +18,47 @@
     "start": "concurrently \"npm run react-start\" \"npm run electron-start\"",
     "react-start": "react-scripts start",
     "build": "react-scripts build",
+    "dist": "electron-builder",
     "electron-start": "wait-on tcp:3000 && electron .",
     "postinstall": "electron-builder install-app-deps",
+    "preelectron-pack": "npm build",
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject"
   },
+  "build": {
+    "appId": "tech.cryptonomic.tezori",
+    "productName": "Tezori",
+    "files": [
+      "dist/**/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ]
+    }
+  },
   "dependencies": {
-    "electron": "^31.0.1",
+    "electron-is-dev": "^3.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -36,9 +71,12 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "concurrently": "^8.2.2",
+    "electron": "^31.0.1",
     "electron-builder": "^24.13.3",
+    "path": "^0.12.7",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
+    "url": "^0.11.3",
     "wait-on": "^7.2.0",
     "web-vitals": "^2.1.4"
   },
