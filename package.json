@@ -1,0 +1,17 @@
+{
+  "name": "galleon",
+  "version": "0.0.1",
+  "description": "Exemplar code for a Tezos wallet program",
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "npx tsc && electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.0.1",
+    "electron-builder": "^24.13.3",
+    "typescript": "^5.4.5"
+  }
+}
