@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
 
 module.exports = {
     mode: 'development',
@@ -34,9 +36,18 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html'
+        }),
+        new webpack.ProvidePlugin({
+            Buffer: ['buffer', 'Buffer'], // Polyfill for Buffer
         })
     ],
     resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        fallback: {
+            "crypto": require.resolve("crypto-browserify"),
+            "vm": require.resolve("vm-browserify"),
+            "stream": require.resolve("stream-browserify"),
+            "buffer": require.resolve('buffer/')
+        }
     }
 };

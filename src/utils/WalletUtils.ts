@@ -2,20 +2,23 @@ import {CryptoUtils} from 'conseiljs-softsigner';
 import {TezosMessageUtils} from "conseiljs";
 import {EncryptedWalletVersionOne, KeyStore} from "../types/WalletTypes";
 
+import { Buffer } from 'buffer';
+window.Buffer = Buffer;
+
 /**
  * Unlocks a wallet using the given filename and password.
- * @param {string} filename - Path to the wallet file.
+ * @param {string} fileContents - Contents of wallet file.
  * @param {string} passphrase - Passphrase to unlock the wallet.
  * @returns {Promise<string>} The Tezos account address associated with the wallet.
  */
-export async function unlockWallet(filename: string, passphrase: string) {
+export async function unlockWallet(fileContents: string, passphrase: string): Promise<string> {
     try {
-        const fs = require('fs');
-        const p = JSON.parse(fs.readFileSync(filename, 'utf8'));
-        const ew: EncryptedWalletVersionOne = JSON.parse(p) as EncryptedWalletVersionOne;
+        const ew: EncryptedWalletVersionOne = JSON.parse(fileContents) as EncryptedWalletVersionOne;
         const encryptedKeys = TezosMessageUtils.writeBufferWithHint(ew.ciphertext);
         const salt = TezosMessageUtils.writeBufferWithHint(ew.salt);
-        const walletData: any[] = JSON.parse(CryptoUtils.decryptMessage(encryptedKeys, passphrase, salt).toString());
+        const decryptedMessage = await CryptoUtils.decryptMessage(encryptedKeys, passphrase, salt)
+        const decryptedString = decryptedMessage.toString();
+        const walletData: any[] = JSON.parse(decryptedString);
         const keys: KeyStore[] = [];
 
         walletData.forEach((w) => {
