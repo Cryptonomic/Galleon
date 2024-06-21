@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { unlockWallet, sendTransaction } from './utils/WalletUtils';
+import { unlockWallet, sendTransaction, delegate } from './utils/WalletUtils';
 import { RpcClient } from '@taquito/rpc';
 
 const App: React.FC = () => {
@@ -15,6 +15,9 @@ const App: React.FC = () => {
     const [recipientAddress, setRecipientAddress] = useState('');
     const [amount, setAmount] = useState('');
 
+    const [newDelegate, setNewDelegate] = useState('');
+    const [currentDelegate, setCurrentDelegate] = useState('');
+
     const [txHash, setTxHash] = useState('');
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +31,10 @@ const App: React.FC = () => {
 
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAmount(event.target.value);
+    };
+
+    const handleNewDelegateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNewDelegate(event.target.value);
     };
 
     const handleUnlockWallet = async () => {
@@ -80,6 +87,12 @@ const App: React.FC = () => {
         setAccountBalance(balanceInTez);
     }
 
+    const handleCurrentDelegateFetch = async () => {
+        const client = new RpcClient(tezosNodeAddress);
+        const currentDelegate = await client.getDelegate(address || '');
+        setCurrentDelegate(currentDelegate || '');
+    }
+
     const handleSend = () => {
         console.log('Sending:', amount, 'to', recipientAddress);
         if (file && passwordRef.current && passwordRef.current.value) {
@@ -108,6 +121,32 @@ const App: React.FC = () => {
         }
     };
 
+    const handleNewDelegate = () => {
+        console.log('Delegating to:', newDelegate);
+        if (file && passwordRef.current && passwordRef.current.value) {
+            try {
+                const password = passwordRef.current.value; // Access the password directly from the input
+                const fileReader = new FileReader();
+                fileReader.onload = async (e) => {
+                    const text = e.target?.result;
+                    if (typeof text === 'string') {
+                        const txHash = await delegate(
+                            text,
+                            password,
+                            newDelegate,
+                            tezosNodeAddress
+                        )
+                        setTxHash(txHash)
+                    }
+                };
+                fileReader.readAsText(file);
+            } catch (error: any) {
+                setError('Failed to unlock wallet: ' + error.message);
+            }
+        } else {
+            setError('Please select a wallet file and enter a password.');
+        }
+    }
 
     return (
         <div>
@@ -152,6 +191,21 @@ const App: React.FC = () => {
                 onChange={handleAmountChange}
             />
             <button onClick={handleSend}>Send</button>
+
+            <h2>Delegate</h2>
+
+            <h3>Current Delegate</h3>
+            <p>{currentDelegate}</p>
+            <button onClick={handleCurrentDelegateFetch}>Fetch Delegate</button>
+
+            <h3>Change Delegate</h3>
+            <input
+                type="text"
+                placeholder="Delegate Address"
+                value={newDelegate}
+                onChange={handleNewDelegateChange}
+            />
+            <button onClick={handleNewDelegate}>Delegate</button>
 
             <h2>Results</h2>
             <p>Transaction Hash: {txHash}</p>

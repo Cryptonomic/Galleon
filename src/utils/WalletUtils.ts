@@ -38,12 +38,10 @@ export async function unlockWallet(walletFileContents: string, passphrase: strin
             });
         });
 
-        const result = {
+        return {
             privateKey: keys[0].secretKey,
             address: walletData[0].publicKeyHash
         }
-
-        return result
     } catch (error) {
         console.error('Failed to unlock wallet:', error);
         throw error;
@@ -75,11 +73,42 @@ export async function sendTransaction(
 
         // Confirm the transaction
         const confirmation = await op.confirmation(1);
-        console.log(`Transaction successfully included in block: ${confirmation.blockHash}`);
+        console.log(`Transaction successfully included in block: ${confirmation}`);
         console.log(`Operation hash: ${op.opHash}`);
         return op.opHash;
     } catch (error) {
         console.error(`Error in sending tez: ${error}`);
+        throw error
+    }
+}
+
+
+export async function delegate(
+    walletFileContents: string,
+    passphrase: string,
+    delegateAddress: string,
+    tezosNodeAddress: string
+): Promise<string> {
+
+    const { privateKey, address } = await unlockWallet(walletFileContents, passphrase);
+
+    const tezos = new TezosToolkit(tezosNodeAddress);
+
+    tezos.setProvider({
+        signer: new InMemorySigner(privateKey)
+    });
+
+    try {
+
+        const op = await tezos.contract.setDelegate({ source: address, delegate: delegateAddress });
+
+        // Confirm the transaction
+        const confirmation = await op.confirmation(1);
+        console.log(`Transaction successfully included in block: ${confirmation}`);
+        console.log(`Operation hash: ${op.hash}`);
+        return op.hash;
+    } catch (error) {
+        console.error(`Error in delegating tez: ${error}`);
         throw error
     }
 }
