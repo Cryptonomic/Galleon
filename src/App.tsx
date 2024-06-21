@@ -48,6 +48,28 @@ const App: React.FC = () => {
             setError('Please select a wallet file and enter a password.');
         }
     };
+
+    const handleKeyReveal = async () => {
+        if (file && passwordRef.current && passwordRef.current.value) {
+            try {
+                const password = passwordRef.current.value; // Access the password directly from the input
+                const fileReader = new FileReader();
+                fileReader.onload = async (e) => {
+                    const text = e.target?.result;
+                    if (typeof text === 'string') {
+                        const accountInfo = await unlockWallet(text, password);
+                        alert('Private Key: ' + accountInfo.privateKey)
+                    }
+                };
+                fileReader.readAsText(file);
+            } catch (error: any) {
+                setError('Failed to unlock wallet: ' + error.message);
+            }
+        } else {
+            setError('Please select a wallet file and enter a password.');
+        }
+    }
+
     const handleBalanceFetch = async () => {
         const client = new RpcClient('https://api.tez.ie/rpc/mainnet');
         const balanceInMutez = await client.getBalance(address || '');
@@ -99,6 +121,9 @@ const App: React.FC = () => {
             <button onClick={handleUnlockWallet}>Unlock Wallet</button>
             {address && <p>Wallet Address: {address}</p>}
             {error && <p>Error: {error}</p>}
+
+            <h2>Key Reveal</h2>
+            <button onClick={handleKeyReveal}>Reveal Private Key</button>
 
             <h2>Balance</h2>
             <p>Balance: {accountBalance} ꜩ</p>
