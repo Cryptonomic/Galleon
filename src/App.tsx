@@ -8,6 +8,8 @@ const App: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const passwordRef = useRef<HTMLInputElement>(null); // Using a ref to access the password input
 
+    const [tezosNodeAddress, setTezosNodeAddress] = useState('https://rpc.tzbeta.net/');
+
     const [accountBalance, setAccountBalance] = useState(0);
 
     const [recipientAddress, setRecipientAddress] = useState('');
@@ -71,7 +73,7 @@ const App: React.FC = () => {
     }
 
     const handleBalanceFetch = async () => {
-        const client = new RpcClient('https://api.tez.ie/rpc/mainnet');
+        const client = new RpcClient(tezosNodeAddress);
         const balanceInMutez = await client.getBalance(address || '');
         const balanceInTez = balanceInMutez.toNumber() / 1000000;
         console.log('Balance num:', balanceInTez);
@@ -92,7 +94,7 @@ const App: React.FC = () => {
                             password,
                             recipientAddress,
                             parseFloat(amount),
-                            'https://api.tez.ie/rpc/mainnet'
+                            tezosNodeAddress
                         );
                         setTxHash(txHash)
                     }
@@ -112,6 +114,13 @@ const App: React.FC = () => {
             <h1>MiniGalleon</h1>
 
             <h2>Settings</h2>
+            <p>Tezos Node Address: {tezosNodeAddress}</p>
+            <input
+                type="text"
+                placeholder="Tezos Node Address"
+                value={tezosNodeAddress}
+                onChange={(e) => setTezosNodeAddress(e.target.value)}
+            />
 
             <h2>Wallet</h2>
             <input type="file" onChange={handleFileChange}/>
