@@ -12,9 +12,10 @@ const Home: React.FC = () => {
     const [tezosNodeAddress, setTezosNodeAddress] = useState('https://rpc.tzbeta.net/');
     const [file, setFile] = useState<File | null>(null);
     const passphraseRef = useRef<HTMLInputElement>(null); // Using a ref to access the password input
-    const [address, setAddress] = useState<string>('tz1cpoqGaG4dagarkCCD3fihEhq6iB2u5zkB'); // TODO: remove
+    const [address, setAddress] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [walletFileContents, setWalletFileContents] = useState<string>('');
+    const [isOpenWallet, setIsOpenWallet] = useState(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
@@ -35,6 +36,7 @@ const Home: React.FC = () => {
                     }
                 };
                 fileReader.readAsText(file);
+                setIsOpenWallet(true);
             } catch (error: any) {
                 setError('Failed to unlock wallet: ' + error.message);
             }
@@ -51,7 +53,7 @@ const Home: React.FC = () => {
                     handleFileChange={handleFileChange}
                     passphraseRef={passphraseRef}
                     unlockWallet={handleUnlockWallet}
-                    disabled={!file} // TODO: update condition
+                    disabled={!file || isOpenWallet} // TODO: update condition
                 />
                 <WalletDetails
                     walletAddress={address}

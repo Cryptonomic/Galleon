@@ -17,7 +17,7 @@ const Delegate = ({
     const [txHash, setTxHash] = useState('');
     const passphraseRef = useRef<HTMLInputElement>(null);
 
-    const handleSend = async() => {
+    const handleDelegate = async() => {
         console.log('Delegating to:', delegateAddress);
         try {
             if (passphraseRef.current && passphraseRef.current.value && walletFileContents) {
@@ -50,8 +50,8 @@ const Delegate = ({
                     <PassphraseInput ref={passphraseRef} />
                     <Button
                         text={'Set Delegate'}
-                        onButtonClick={handleSend}
-                        disabled={!delegateAddress}
+                        onButtonClick={handleDelegate}
+                        disabled={!delegateAddress || !walletFileContents}
                     />
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from './Button';
 import { RpcClient } from '@taquito/rpc';
 
@@ -12,7 +12,7 @@ const WalletDetails = ({
     const [accountBalance, setAccountBalance] = useState(0);
     const [currentDelegate, setCurrentDelegate] = useState<string | null>('');
 
-    const handleBalanceFetch = async () => {
+    const handleRefresh = async () => {
         const client = new RpcClient(tezosNodeAddress);
         const balanceInMutez = await client.getBalance(walletAddress);
         const balanceInTez = balanceInMutez.toNumber() / 1000000;
@@ -22,6 +22,11 @@ const WalletDetails = ({
         setCurrentDelegate(delegateAddress);
     }
 
+    useEffect(() => {
+        handleRefresh();
+    }, [walletAddress])
+
+
     return (
         <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
             <div className='flex justify-between items-start'>
@@ -29,7 +34,7 @@ const WalletDetails = ({
                     <span className='font-bold'> Wallet Address: </span>
                     { walletAddress }
                 </p>
-                <Button text={'Refresh'} onButtonClick={handleBalanceFetch} disabled={!walletAddress} /> {/*  TODO: add button icon */}
+                <Button text={'Refresh'} onButtonClick={handleRefresh} disabled={!walletAddress} /> {/*  TODO: add button icon */}
             </div>
             <div className='flex gap-x-[3.75rem]'>
                 <div>

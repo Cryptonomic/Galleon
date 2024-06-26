@@ -61,7 +61,7 @@ const Send = ({
                 <Button
                     text={'Send'}
                     onButtonClick={handleSend}
-                    disabled={!amount || !recipientAddress}
+                    disabled={!amount || !recipientAddress || !walletFileContents}
                 />
             </div>
         </div>

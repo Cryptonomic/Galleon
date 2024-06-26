@@ -34,6 +34,7 @@ const ExportPrivateKey = ({
                     <Button
                         text={'Unlock'}
                         onButtonClick={handleKeyReveal}
+                        disabled={!walletFileContents}
                     />
                 </div>
                 <div>
