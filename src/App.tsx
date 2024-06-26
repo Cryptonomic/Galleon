@@ -150,7 +150,7 @@ const App: React.FC = () => {
 
     return (
         <div>
-            <h1>MiniGalleon</h1>
+            <h1 className="text-[#43c0f6] text-3xl font-bold underline">MiniGalleon</h1>
 
             <h2>Settings</h2>
             <p>Tezos Node Address: {tezosNodeAddress}</p>
