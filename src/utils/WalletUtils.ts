@@ -1,17 +1,37 @@
 import {CryptoUtils} from 'conseiljs-softsigner';
-import {TezosMessageUtils} from "conseiljs";
 import {EncryptedWalletVersionOne, KeyStore} from "../types/WalletTypes";
 
 const { TezosToolkit } = require('@taquito/taquito');
 const { InMemorySigner } = require('@taquito/signer');
 
+import bs58check from 'bs58check';
 import { Buffer } from 'buffer';
-window.Buffer = Buffer;
 
 export type AccountInfo= {
     privateKey: string;
     address: string;
 };
+
+
+/**
+ * Writes an arbitrary Base58-check string into hex.
+ *
+ * @param b String to convert.
+ * @param hint Hint to use while encoding, blank will encode the string directly, 'chain_id' will encode a chainid type.
+ */
+export function writeBufferWithHint(b: string, hint: string = ''): Buffer {
+    if (hint === '') {
+        // Convert Uint8Array to Buffer
+        return Buffer.from(bs58check.decode(b));
+    }
+
+    if (hint === 'chain_id') {
+        // Convert Uint8Array to Buffer and remove the prefix
+        return Buffer.from(bs58check.decode(b)).slice("Net".length);
+    }
+
+    throw new Error(`Unsupported hint, '${hint}'`);
+}
 
 /**
  * Unlocks a wallet using the given filename and password.
@@ -22,8 +42,8 @@ export type AccountInfo= {
 export async function unlockWallet(walletFileContents: string, passphrase: string): Promise<AccountInfo> {
     try {
         const ew: EncryptedWalletVersionOne = JSON.parse(walletFileContents) as EncryptedWalletVersionOne;
-        const encryptedKeys = TezosMessageUtils.writeBufferWithHint(ew.ciphertext);
-        const salt = TezosMessageUtils.writeBufferWithHint(ew.salt);
+        const encryptedKeys = writeBufferWithHint(ew.ciphertext);
+        const salt = writeBufferWithHint(ew.salt);
         const decryptedMessage = await CryptoUtils.decryptMessage(encryptedKeys, passphrase, salt)
         const decryptedString = decryptedMessage.toString();
         const walletData: any[] = JSON.parse(decryptedString);
