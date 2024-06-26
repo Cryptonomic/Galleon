@@ -1,5 +1,5 @@
-import {CryptoUtils} from 'conseiljs-softsigner';
 import {EncryptedWalletVersionOne, KeyStore} from "../types/WalletTypes";
+import {pwhash, open} from './SodiumUtils';
 
 const { TezosToolkit } = require('@taquito/taquito');
 const { InMemorySigner } = require('@taquito/signer');
@@ -33,6 +33,16 @@ export function writeBufferWithHint(b: string, hint: string = ''): Buffer {
     throw new Error(`Unsupported hint, '${hint}'`);
 }
 
+export async function decryptMessage(message: Buffer, passphrase: string, salt: Buffer) : Promise<Buffer> {
+    const keyBytes = await pwhash(passphrase, salt)
+    const m = await open(message, keyBytes);
+    if (m === null) {
+        throw new Error('Failed to decrypt message');
+    }
+    return Buffer.from(m);
+}
+
+
 /**
  * Unlocks a wallet using the given filename and password.
  * @param {string} walletFileContents - Contents of wallet file.
@@ -44,7 +54,7 @@ export async function unlockWallet(walletFileContents: string, passphrase: strin
         const ew: EncryptedWalletVersionOne = JSON.parse(walletFileContents) as EncryptedWalletVersionOne;
         const encryptedKeys = writeBufferWithHint(ew.ciphertext);
         const salt = writeBufferWithHint(ew.salt);
-        const decryptedMessage = await CryptoUtils.decryptMessage(encryptedKeys, passphrase, salt)
+        const decryptedMessage = await decryptMessage(encryptedKeys, passphrase, salt)
         const decryptedString = decryptedMessage.toString();
         const walletData: any[] = JSON.parse(decryptedString);
         const keys: KeyStore[] = [];
