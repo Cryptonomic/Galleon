@@ -5,11 +5,13 @@ const webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
-    entry: './src/renderer.tsx',
+    entry: {
+        main: './src/main.ts',
+        renderer: './src/renderer.tsx'
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
-        publicPath: '/'
+        filename: '[name].js'
     },
     devServer: {
         static: {
@@ -47,7 +49,10 @@ module.exports = {
             "crypto": require.resolve("crypto-browserify"),
             "vm": require.resolve("vm-browserify"),
             "stream": require.resolve("stream-browserify"),
-            "buffer": require.resolve('buffer/')
+            "buffer": require.resolve('buffer/'),
+            "path": require.resolve("path-browserify"),
+            "os": require.resolve("os-browserify/browser"),
+            "util": require.resolve("util/")
         }
     }
 };
