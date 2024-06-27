@@ -31,8 +31,8 @@ const TransactionResultModal = ({
 
                     <div className='pt-7'>
                         <p className='font-bold text-sm'> View on Block Explorer </p>
-                        <p className='font-light text-[10px] text-sky-30'>
-                            <a href={`https://tzkt.io/${txHash}`} target="_blank" rel="noopener noreferrer">
+                        <p className='font-light text-[10px] text-sky-30 break-words whitespace-normal'>
+                            <a href={`https://tzkt.io/${txHash}`} target='_blank' rel='noopener noreferrer' className='break-all'>
                                 {`https://tzkt.io/${txHash}`}
                             </a>
                         </p>

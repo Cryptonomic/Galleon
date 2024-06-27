@@ -37,8 +37,8 @@ const WalletDetails = ({
 
     return (
         <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
-            <div className='flex justify-between items-start'>
-                <p>
+            <div className='flex flex-wrap gap-y-2 justify-between items-start'>
+                <p className='break-all'>
                     <span className='font-bold'> Wallet Address: </span>
                     { walletAddress }
                 </p>
@@ -49,38 +49,37 @@ const WalletDetails = ({
                     iconSrc={refreshIcon}
                 />
             </div>
-            <div className='flex gap-x-[3.75rem]'>
+            <div className='flex flex-wrap gap-y-2 gap-x-[3.75rem]'>
                 <div>
                     <p className='font-bold'> Balance </p>
                     <p> { accountBalance } ꜩ </p>
                 </div>
                 <div>
                     <p className='font-bold'> Delegate </p>
-                    <p> { currentDelegate } </p>
+                    <p className='break-all'> { currentDelegate } </p>
                 </div>
             </div>
             <div className='flex flex-col gap-2'>
-                <div className='flex gap-2'>
+                <div className='flex flex-wrap gap-2'>
                     <p className='font-bold'> View Transactions </p>
                     <p className='text-sky-30'>
-                        <a href={txLink} target="_blank" rel="noopener noreferrer">
+                        <a href={txLink} target='_blank' rel='noopener noreferrer' className='break-all'>
                             {walletAddress && txLink}
                         </a>
                     </p>
                 </div>
-                <div className='flex gap-2'>
+                <div className='flex flex-wrap gap-2'>
                     <p className='font-bold'> View NFTs </p>
                     <p className='text-sky-30'>
-                        <a href={nftLink} target="_blank" rel="noopener noreferrer">
+                        <a href={nftLink} target='_blank' rel='noopener noreferrer' className='break-all'>
                             {walletAddress && nftLink}
                         </a>
                     </p>
                 </div>
-                <div className='flex gap-2'>
+                <div className='flex flex-wrap gap-2'>
                     <p className='font-bold'> View Tokens </p>
                     <p className='text-sky-30'>
-                        {}
-                        <a href={tokensLink} target="_blank" rel="noopener noreferrer">
+                        <a href={tokensLink} target='_blank' rel='noopener noreferrer' className='break-all'>
                             {walletAddress && tokensLink}
                         </a>
                     </p>
