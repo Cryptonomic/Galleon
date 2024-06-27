@@ -1,6 +1,6 @@
 // In your main.js or main.ts for Electron
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow } = window.require('electron');
 const path = require('path');
 
 function createWindow() {
