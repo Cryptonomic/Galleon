@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Button from './Button';
 import { RpcClient } from '@taquito/rpc';
 
+import refreshIcon from '../assets/refresh_icon.png';
+
 const WalletDetails = ({
     walletAddress,
     tezosNodeAddress
@@ -36,7 +38,12 @@ const WalletDetails = ({
                     <span className='font-bold'> Wallet Address: </span>
                     { walletAddress }
                 </p>
-                <Button text={'Refresh'} onButtonClick={handleRefresh} disabled={!walletAddress} /> {/*  TODO: add button icon */}
+                <Button
+                    text={'Refresh'}
+                    onButtonClick={handleRefresh}
+                    disabled={!walletAddress}
+                    iconSrc={refreshIcon}
+                />
             </div>
             <div className='flex gap-x-[3.75rem]'>
                 <div>

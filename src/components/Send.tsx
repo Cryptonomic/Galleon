@@ -59,8 +59,13 @@ const Send = ({
                     <TextInput
                         id={'amount'}
                         label={'Enter Amount'}
-                        value={amount} // TODO: add tezos symbol
-                        onChange={(e) => setAmount(e.target.value)}
+                        value={`${amount}`} // TODO: add tezos symbol
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^\d*\.?\d*$/.test(value)) { // Regex to allow only numbers and a single decimal point
+                                setAmount(value);
+                            }
+                        }}
                         className={'w-[212px]'}
                     />
                 </div>

@@ -1,5 +1,6 @@
-import React from 'react'
-import Modal from './Modal'
+import React from 'react';
+import Modal from './Modal';
+import copyIcon from '../assets/copy_icon.png';
 
 const TransactionResultModal = ({
     txHash,
@@ -18,11 +19,13 @@ const TransactionResultModal = ({
                     <p className='font-medium text-center'> Transaction Result </p>
                     <div className='pt-7'>
                         <p className='font-bold text-sm'> Transaction Hash </p>
-                        <div className='flex gap-1'>
+                        <div className='flex gap-1 items-center'>
                             <p className='font-light text-[10px]'>
                                 {txHash}
                             </p>
-                            {/* TODO ADD ICON */}
+                            <button className='w-4 h-4' onClick={() => navigator.clipboard.writeText(txHash)}>
+                                <img src={copyIcon} alt='copy' className='w-full h-full' />
+                            </button>
                         </div>
                     </div>
 

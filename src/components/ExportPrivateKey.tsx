@@ -43,9 +43,8 @@ const ExportPrivateKey = ({
                     </div>
                     <div>
                         <p> Secret Key </p>
-                        <div className='w-[392px] h-[26px] bg-white'>
+                        <div className='w-[392px] min-h-[26px] bg-white p-4 break-words whitespace-normal'>
                             <p> {secretKey} </p>
-                            {/* TODO: text-wrap */}
                         </div>
                     </div>
                 </div>
