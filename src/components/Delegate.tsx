@@ -9,21 +9,22 @@ import TransactionResultModal from './TransactionResultModal';
 
 const Delegate = ({
     tezosNodeAddress,
-    walletFileContents
+    walletFileContents,
+    isWalletOpen
 }: {
     tezosNodeAddress: string;
     walletFileContents: string;
+    isWalletOpen: boolean;
 }) => {
     const [delegateAddress, setDelegateAddress] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [txHash, setTxHash] = useState('');
-    const passphraseRef = useRef<HTMLInputElement>(null);
+    const [passphrase, setPassphrase] = useState<string>('');
 
     const handleDelegate = async() => {
         console.log('Delegating to:', delegateAddress);
         try {
-            if (passphraseRef.current && passphraseRef.current.value && walletFileContents) {
-                const passphrase = passphraseRef.current.value;
+            if (walletFileContents) {
                 const txHash = await delegate(
                     walletFileContents,
                     passphrase,
@@ -34,6 +35,8 @@ const Delegate = ({
             }
         } catch (error: any) {
             setError('Failed to delegate: ' + error.message);
+        } finally {
+            setPassphrase('');
         }
     };
 
@@ -52,11 +55,11 @@ const Delegate = ({
                         className={'w-[338px]'}
                     />
                     <div className='flex flex-grow items-end justify-between'>
-                        <PassphraseInput ref={passphraseRef} />
+                        <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
                         <Button
                             text={'Set Delegate'}
                             onButtonClick={handleDelegate}
-                            disabled={!delegateAddress || !walletFileContents}
+                            disabled={!isWalletOpen || !delegateAddress || !walletFileContents || !passphrase}
                         />
                     </div>
                 </div>

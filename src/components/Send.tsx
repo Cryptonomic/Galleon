@@ -9,22 +9,23 @@ import TransactionResultModal from './TransactionResultModal';
 
 const Send = ({
     tezosNodeAddress,
-    walletFileContents
+    walletFileContents,
+    isWalletOpen
 }: {
     tezosNodeAddress: string;
     walletFileContents: string;
+    isWalletOpen: boolean;
 }) => {
     const [recipientAddress, setRecipientAddress] = useState('');
     const [amount, setAmount] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [txHash, setTxHash] = useState('');
-    const passphraseRef = useRef<HTMLInputElement>(null);
+    const [passphrase, setPassphrase] = useState<string>('');
 
     const handleSend = async() => {
         console.log('Sending:', amount, 'to', recipientAddress);
         try {
-            if (passphraseRef.current && passphraseRef.current.value && walletFileContents) {
-                const passphrase = passphraseRef.current.value;
+            if (walletFileContents) {
                 const txHash = await sendTransaction(
                     walletFileContents,
                     passphrase,
@@ -36,6 +37,8 @@ const Send = ({
             }
         } catch (error: any) {
             setError('Failed to send transaction: ' + error.message);
+        } finally {
+            setPassphrase('');
         }
     };
 
@@ -62,11 +65,11 @@ const Send = ({
                     />
                 </div>
                 <div className='flex items-end gap-x-8'>
-                    <PassphraseInput ref={passphraseRef} />
+                    <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
                     <Button
                         text={'Send'}
                         onButtonClick={handleSend}
-                        disabled={!amount || !recipientAddress || !walletFileContents}
+                        disabled={isWalletOpen || !passphrase || !amount || !recipientAddress || !walletFileContents}
                     />
                 </div>
             </div>

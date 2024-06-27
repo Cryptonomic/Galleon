@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
 import Header from '../components/Header';
 import UploadWallet from '../components/UploadWallet';
@@ -12,42 +12,39 @@ import ErrorModal from '../components/ErrorModal';
 const Home: React.FC = () => {
     const [tezosNodeAddress, setTezosNodeAddress] = useState('https://rpc.tzbeta.net/');
     const [file, setFile] = useState<File | null>(null);
-    const passphraseRef = useRef<HTMLInputElement>(null); // Using a ref to access the password input
+    const [passphrase, setPassphrase] = useState<string>('');
     const [address, setAddress] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [walletFileContents, setWalletFileContents] = useState<string>('');
-    const [isOpenWallet, setIsOpenWallet] = useState(false);
+    const [isWalletOpen, setIsWalletOpen] = useState(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files ? event.target.files[0] : null;
-        setFile(file);
+        const selectedFile = event.target.files ? event.target.files[0] : null;
+
+        if (selectedFile) {
+            setFile(selectedFile);
+            const fileReader = new FileReader();
+            fileReader.onload = async (e) => {
+                const text = e.target?.result;
+                if (typeof text === 'string') {
+                    setWalletFileContents(text);
+                }
+            };
+            fileReader.readAsText(selectedFile);
+        } else {
+            setError('Please select a wallet file and enter a password.');
+        }
     };
 
     const handleUnlockWallet = async () => {
-        if (file && passphraseRef.current && passphraseRef.current.value) {
-            const password = passphraseRef.current.value; // Access the password directly from the input
-            const fileReader = new FileReader();
-            fileReader.onload = async (e) => {
-                try {
-                    const text = e.target?.result;
-                    if (typeof text === 'string') {
-                        const accountInfo = await unlockWallet(text, password);
-                        setAddress(accountInfo.address);
-                        setWalletFileContents(text);
-                        setIsOpenWallet(true);
-                    }
-                } catch (error: any) {
-                    setError('Failed to unlock wallet: ' + error.message);
-                }
-            };
-            try {
-                fileReader.readAsText(file);
-            } catch (error) {
-                console.error('Error reading the file:', error);
-                setError('Failed to read the wallet file.');
-            }
-        } else {
-            setError('Please select a wallet file and enter a password.');
+        try {
+            const accountInfo = await unlockWallet(walletFileContents, passphrase);
+            setAddress(accountInfo.address);
+            setIsWalletOpen(true);
+        } catch (error: any) {
+            setError('Failed to unlock wallet: ' + error.message);
+        } finally {
+            setPassphrase('');
         }
     };
 
@@ -58,9 +55,10 @@ const Home: React.FC = () => {
             <div className='w-[773px] flex flex-col gap-y-2 mx-auto pt-12'>
                 <UploadWallet
                     handleFileChange={handleFileChange}
-                    passphraseRef={passphraseRef}
+                    passphrase={passphrase}
+                    setPassphrase={(e) => setPassphrase(e.target.value)}
                     unlockWallet={handleUnlockWallet}
-                    disabled={!file || isOpenWallet} // TODO: update condition
+                    disabled={!file || !passphrase || isWalletOpen}
                 />
                 <WalletDetails
                     walletAddress={address}
@@ -69,10 +67,12 @@ const Home: React.FC = () => {
                 <Send
                     tezosNodeAddress={tezosNodeAddress}
                     walletFileContents={walletFileContents}
+                    isWalletOpen={isWalletOpen}
                 />
                 <Delegate
                     tezosNodeAddress={tezosNodeAddress}
                     walletFileContents={walletFileContents}
+                    isWalletOpen={isWalletOpen}
                 />
                 <ExportPrivateKey
                     walletFileContents={walletFileContents}
