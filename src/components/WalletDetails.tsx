@@ -28,7 +28,11 @@ const WalletDetails = ({
 
     useEffect(() => {
         handleRefresh();
-    }, [walletAddress])
+    }, [walletAddress]);
+
+    const txLink = `https://tzstats.com/${walletAddress}#transactions`;
+    const nftLink = `https://tzstats.com/${walletAddress}#nfts`;
+    const tokensLink = `https://tzstats.com/${walletAddress}#tokens`;
 
 
     return (
@@ -53,6 +57,33 @@ const WalletDetails = ({
                 <div>
                     <p className='font-bold'> Delegate </p>
                     <p> { currentDelegate } </p>
+                </div>
+            </div>
+            <div className='flex flex-col gap-2'>
+                <div className='flex gap-2'>
+                    <p className='font-bold'> View Transactions </p>
+                    <p className='text-sky-30'>
+                        <a href={txLink} target="_blank" rel="noopener noreferrer">
+                            {walletAddress && txLink}
+                        </a>
+                    </p>
+                </div>
+                <div className='flex gap-2'>
+                    <p className='font-bold'> View NFTs </p>
+                    <p className='text-sky-30'>
+                        <a href={nftLink} target="_blank" rel="noopener noreferrer">
+                            {walletAddress && nftLink}
+                        </a>
+                    </p>
+                </div>
+                <div className='flex gap-2'>
+                    <p className='font-bold'> View Tokens </p>
+                    <p className='text-sky-30'>
+                        {}
+                        <a href={tokensLink} target="_blank" rel="noopener noreferrer">
+                            {walletAddress && tokensLink}
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
