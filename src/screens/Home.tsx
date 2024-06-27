@@ -52,7 +52,7 @@ const Home: React.FC = () => {
         <>
             <ErrorModal { ...{ error, setError } }  />
             <Header tezosNodeAddress={tezosNodeAddress} setTezosNodeAddress={(e: React.ChangeEvent<HTMLInputElement>) => setTezosNodeAddress(e.target.value)} />
-            <div className='w-[773px] flex flex-col gap-y-2 mx-auto pt-12'>
+            <div className='w-70% lg:w-[773px] flex flex-col gap-y-2 mx-auto pt-12'>
                 <UploadWallet
                     handleFileChange={handleFileChange}
                     passphrase={passphrase}

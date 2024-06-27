@@ -46,7 +46,7 @@ const Delegate = ({
             <TransactionResultModal { ...{txHash, setTxHash }} />
             <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
                 <p className='font-bold'> Delegate </p>
-                <div className='flex gap-x-8'>
+                <div className='flex flex-wrap items-end gap-y-2 gap-x-8'>
                     <TextInput
                         id={'delegate'}
                         label={'Delegate Address'}
@@ -54,14 +54,12 @@ const Delegate = ({
                         onChange={(e) => setDelegateAddress(e.target.value)}
                         className={'w-[338px]'}
                     />
-                    <div className='flex flex-grow items-end justify-between'>
-                        <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
-                        <Button
-                            text={'Set Delegate'}
-                            onButtonClick={handleDelegate}
-                            disabled={!isWalletOpen || !delegateAddress || !walletFileContents || !passphrase}
-                        />
-                    </div>
+                    <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
+                    <Button
+                        text={'Set Delegate'}
+                        onButtonClick={handleDelegate}
+                        disabled={!isWalletOpen || !delegateAddress || !walletFileContents || !passphrase}
+                    />
                 </div>
             </div>
         </>

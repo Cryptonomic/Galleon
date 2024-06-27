@@ -69,7 +69,7 @@ const Send = ({
                         className={'w-[212px]'}
                     />
                 </div>
-                <div className='flex items-end gap-x-8'>
+                <div className='flex flex-wrap items-end gap-y-2 gap-x-8'>
                     <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
                     <Button
                         text={'Send'}

@@ -18,7 +18,7 @@ const UploadWallet = ({
     return (
         <div className='bg-sky-20 py-4 px-6 border rounded-3xl'>
         <p className='font-bold'> Open Existing Wallet </p>
-        <div className='flex items-end gap-x-8'>
+        <div className='flex flex-wrap items-end gap-y-2 gap-x-8'>
             <div>
             <p> Upload Wallet </p>
             <input type="file" onChange={handleFileChange} className='w-[242px]'/>

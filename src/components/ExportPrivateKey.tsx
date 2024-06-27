@@ -32,16 +32,14 @@ const ExportPrivateKey = ({
             <ErrorModal { ...{ error, setError }}  />
             <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
                 <p className='font-bold'> Export Private Key </p>
-                <div className='flex gap-x-8'>
-                    <div className='flex flex-grow items-end justify-between'>
-                        <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
-                        <Button
-                            text={'Unlock'}
-                            onButtonClick={handleKeyReveal}
-                            disabled={!passphrase || !walletFileContents}
-                        />
-                    </div>
-                    <div>
+                <div className='flex flex-wrap items-end gap-x-8'>
+                    <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
+                    <Button
+                        text={'Unlock'}
+                        onButtonClick={handleKeyReveal}
+                        disabled={!passphrase || !walletFileContents}
+                    />
+                    <div className='flex-grow'>
                         <p> Secret Key </p>
                         <div className='w-[392px] min-h-[26px] bg-white p-4 break-words whitespace-normal'>
                             <p> {secretKey} </p>
