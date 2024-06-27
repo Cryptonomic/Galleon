@@ -3,6 +3,7 @@ import { unlockWallet } from '../utils/WalletUtils';
 
 import PassphraseInput from './PassphraseInput';
 import Button from './Button';
+import ErrorModal from './ErrorModal';
 
 const ExportPrivateKey = ({
     walletFileContents
@@ -26,25 +27,29 @@ const ExportPrivateKey = ({
     };
 
     return (
-        <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
-            <p className='font-bold'> Export Private Key </p>
-            <div className='flex gap-x-8'>
-                <div className='flex flex-grow items-end justify-between'>
-                    <PassphraseInput ref={passphraseRef} />
-                    <Button
-                        text={'Unlock'}
-                        onButtonClick={handleKeyReveal}
-                        disabled={!walletFileContents}
-                    />
-                </div>
-                <div>
-                    <p> Secret Key </p>
-                    <div className='w-[392px] h-[26px] bg-white'>
-                        <p> {secretKey} </p>
+        <>
+            <ErrorModal { ...{ error, setError }}  />
+            <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
+                <p className='font-bold'> Export Private Key </p>
+                <div className='flex gap-x-8'>
+                    <div className='flex flex-grow items-end justify-between'>
+                        <PassphraseInput ref={passphraseRef} />
+                        <Button
+                            text={'Unlock'}
+                            onButtonClick={handleKeyReveal}
+                            disabled={!walletFileContents}
+                        />
+                    </div>
+                    <div>
+                        <p> Secret Key </p>
+                        <div className='w-[392px] h-[26px] bg-white'>
+                            <p> {secretKey} </p>
+                            {/* TODO: text-wrap */}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

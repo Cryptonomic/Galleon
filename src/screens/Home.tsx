@@ -7,6 +7,7 @@ import WalletDetails from '../components/WalletDetails';
 import Send from '../components/Send';
 import Delegate from '../components/Delegate';
 import ExportPrivateKey from '../components/ExportPrivateKey';
+import ErrorModal from '../components/ErrorModal';
 
 const Home: React.FC = () => {
     const [tezosNodeAddress, setTezosNodeAddress] = useState('https://rpc.tzbeta.net/');
@@ -24,21 +25,26 @@ const Home: React.FC = () => {
 
     const handleUnlockWallet = async () => {
         if (file && passphraseRef.current && passphraseRef.current.value) {
-            try {
-                const password = passphraseRef.current.value; // Access the password directly from the input
-                const fileReader = new FileReader();
-                fileReader.onload = async (e) => {
+            const password = passphraseRef.current.value; // Access the password directly from the input
+            const fileReader = new FileReader();
+            fileReader.onload = async (e) => {
+                try {
                     const text = e.target?.result;
                     if (typeof text === 'string') {
-                        setWalletFileContents(text);
                         const accountInfo = await unlockWallet(text, password);
                         setAddress(accountInfo.address);
+                        setWalletFileContents(text);
+                        setIsOpenWallet(true);
                     }
-                };
+                } catch (error: any) {
+                    setError('Failed to unlock wallet: ' + error.message);
+                }
+            };
+            try {
                 fileReader.readAsText(file);
-                setIsOpenWallet(true);
-            } catch (error: any) {
-                setError('Failed to unlock wallet: ' + error.message);
+            } catch (error) {
+                console.error('Error reading the file:', error);
+                setError('Failed to read the wallet file.');
             }
         } else {
             setError('Please select a wallet file and enter a password.');
@@ -47,6 +53,7 @@ const Home: React.FC = () => {
 
     return (
         <>
+            <ErrorModal { ...{ error, setError } }  />
             <Header tezosNodeAddress={tezosNodeAddress} setTezosNodeAddress={(e: React.ChangeEvent<HTMLInputElement>) => setTezosNodeAddress(e.target.value)} />
             <div className='w-[773px] flex flex-col gap-y-2 mx-auto pt-12'>
                 <UploadWallet

@@ -13,13 +13,15 @@ const WalletDetails = ({
     const [currentDelegate, setCurrentDelegate] = useState<string | null>('');
 
     const handleRefresh = async () => {
-        const client = new RpcClient(tezosNodeAddress);
-        const balanceInMutez = await client.getBalance(walletAddress);
-        const balanceInTez = balanceInMutez.toNumber() / 1000000;
-        setAccountBalance(balanceInTez);
+        if(walletAddress) {
+            const client = new RpcClient(tezosNodeAddress);
+            const balanceInMutez = await client.getBalance(walletAddress);
+            const balanceInTez = balanceInMutez.toNumber() / 1000000;
+            setAccountBalance(balanceInTez);
 
-        const delegateAddress = await client.getDelegate(walletAddress);
-        setCurrentDelegate(delegateAddress);
+            const delegateAddress = await client.getDelegate(walletAddress);
+            setCurrentDelegate(delegateAddress);
+        }
     }
 
     useEffect(() => {

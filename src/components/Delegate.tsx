@@ -4,6 +4,8 @@ import { delegate } from '../utils/WalletUtils';
 import TextInput from './TextInput';
 import PassphraseInput from './PassphraseInput';
 import Button from './Button';
+import ErrorModal from './ErrorModal';
+import TransactionResultModal from './TransactionResultModal';
 
 const Delegate = ({
     tezosNodeAddress,
@@ -36,26 +38,30 @@ const Delegate = ({
     };
 
     return (
-        <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
-            <p className='font-bold'> Delegate </p>
-            <div className='flex gap-x-8'>
-                <TextInput
-                    id={'delegate'}
-                    label={'Delegate Address'}
-                    value={delegateAddress}
-                    onChange={(e) => setDelegateAddress(e.target.value)}
-                    className={'w-[338px]'}
-                />
-                <div className='flex flex-grow items-end justify-between'>
-                    <PassphraseInput ref={passphraseRef} />
-                    <Button
-                        text={'Set Delegate'}
-                        onButtonClick={handleDelegate}
-                        disabled={!delegateAddress || !walletFileContents}
+        <>
+            <ErrorModal { ...{ error, setError }}  />
+            <TransactionResultModal { ...{txHash, setTxHash }} />
+            <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
+                <p className='font-bold'> Delegate </p>
+                <div className='flex gap-x-8'>
+                    <TextInput
+                        id={'delegate'}
+                        label={'Delegate Address'}
+                        value={delegateAddress}
+                        onChange={(e) => setDelegateAddress(e.target.value)}
+                        className={'w-[338px]'}
                     />
+                    <div className='flex flex-grow items-end justify-between'>
+                        <PassphraseInput ref={passphraseRef} />
+                        <Button
+                            text={'Set Delegate'}
+                            onButtonClick={handleDelegate}
+                            disabled={!delegateAddress || !walletFileContents}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
