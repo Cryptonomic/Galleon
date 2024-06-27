@@ -74,7 +74,7 @@ const Send = ({
                     <Button
                         text={'Send'}
                         onButtonClick={handleSend}
-                        disabled={isWalletOpen || !passphrase || !amount || !recipientAddress || !walletFileContents}
+                        disabled={!isWalletOpen || !passphrase || !amount || !recipientAddress || !walletFileContents}
                     />
                 </div>
             </div>
