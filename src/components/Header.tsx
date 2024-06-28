@@ -1,5 +1,7 @@
 import React from 'react';
 
+import galleonLogo from '../assets/logo.png';
+
 const Header = ({
   tezosNodeAddress,
   setTezosNodeAddress
@@ -10,7 +12,9 @@ const Header = ({
 
   return (
     <div className='flex justify-between'>
-      <p className='font-light text-[2rem] leading-[37.5px]'> Galleon </p>
+      <div className='w-[150px] h-[40px]'>
+        <img src={galleonLogo} alt='galleon' className='w-full h-full' />
+      </div>
       <div className='flex gap-x-1'>
         <p className='text-lg'>Tezos Node</p>
         <div className='w-[204px] h-[28px]'>
