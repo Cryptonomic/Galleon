@@ -30,7 +30,7 @@ const ExportPrivateKey = ({
     return (
         <>
             <ErrorModal { ...{ error, setError }}  />
-            <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
+            <div className='bg-grey-20 flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
                 <p className='font-bold'> Export Private Key </p>
                 <div className='flex flex-wrap items-end gap-x-8'>
                     <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
