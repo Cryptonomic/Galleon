@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import UploadWallet from '../components/UploadWallet';
 import { unlockWallet } from '../utils/WalletUtils';
-import WalletDetails from '../components/WalletDetails';
+import AccountDetails from '../components/AccountDetails';
 import Send from '../components/Send';
 import Delegate from '../components/Delegate';
 import ExportPrivateKey from '../components/ExportPrivateKey';
@@ -60,7 +60,7 @@ const Home: React.FC = () => {
                     unlockWallet={handleUnlockWallet}
                     disabled={!file || !passphrase || isWalletOpen}
                 />
-                <WalletDetails
+                <AccountDetails
                     walletAddress={address}
                     tezosNodeAddress={tezosNodeAddress}
                 />
