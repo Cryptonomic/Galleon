@@ -46,7 +46,7 @@ const Send = ({
         <>
             <ErrorModal { ...{ error, setError }}  />
             <TransactionResultModal { ...{txHash, setTxHash }} />
-            <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
+            <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
                 <p className='font-bold'> Send </p>
                 <div className='flex gap-x-8'>
                     <TextInput

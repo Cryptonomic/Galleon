@@ -31,7 +31,7 @@ const WalletDetails = ({
     }, [walletAddress]);
 
     return (
-        <div className='bg-sky-30 text-white flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
+        <div className='bg-sky-30 text-white flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
             <div className='flex flex-wrap gap-y-2 justify-between items-start'>
                 <p className='break-all'>
                     <span className='font-bold'> Wallet Address: </span>

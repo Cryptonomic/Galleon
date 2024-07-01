@@ -44,7 +44,7 @@ const Delegate = ({
         <>
             <ErrorModal { ...{ error, setError }}  />
             <TransactionResultModal { ...{txHash, setTxHash }} />
-            <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
+            <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
                 <p className='font-bold'> Delegate </p>
                 <div className='flex flex-wrap items-end gap-y-2 gap-x-8'>
                     <TextInput

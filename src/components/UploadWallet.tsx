@@ -16,7 +16,7 @@ const UploadWallet = ({
     disabled: boolean;
 }) => {
     return (
-        <div className='bg-sky-20 py-4 px-6 border rounded-3xl'>
+        <div className='bg-sky-20 py-4 px-6 border rounded-lg'>
         <p className='font-bold'> Open Existing Wallet </p>
         <div className='flex flex-wrap items-end gap-y-2 gap-x-8'>
             <div>

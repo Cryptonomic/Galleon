@@ -10,7 +10,7 @@ const AssetLinks = ({
     const tokensLink = `https://tzstats.com/${walletAddress}#tokens`;
 
     return (
-        <div className='bg-sky-30flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
+        <div className='bg-sky-30flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
             <div className='flex flex-col gap-2'>
                 <div className='flex flex-wrap gap-2'>
                     <p className='font-bold'> View Transactions </p>
