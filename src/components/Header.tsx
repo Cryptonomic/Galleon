@@ -45,7 +45,7 @@ const Header = ({
                   <img src={settingsIcon} alt='open' className='w-6 h-6' />
                 </a>
                 <a
-                    href={''}
+                    href={'https://discourse.cryptonomic.tech/tags/c/public/galleon-ext/22/faq'}
                     target='_blank'
                     rel='noopener noreferrer'
                     className='flex flex-col items-center gap-1 uppercase p-4 font-medium '
