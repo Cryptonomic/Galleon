@@ -34,7 +34,7 @@ const WalletDetails = ({
         <div className='bg-sky-30 text-white flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
             <div className='flex flex-wrap gap-y-2 justify-between items-start'>
                 <p className='break-all'>
-                    <span className='font-bold'> Wallet Address: </span>
+                    <span className='font-bold text-xl'> Wallet Address: </span>
                     { walletAddress }
                 </p>
                 <Button
@@ -46,11 +46,11 @@ const WalletDetails = ({
             </div>
             <div className='flex flex-wrap gap-y-2 gap-x-[3.75rem]'>
                 <div>
-                    <p className='font-bold'> Balance </p>
+                    <p className='font-bold text-lg'> Balance </p>
                     <p> { accountBalance } ꜩ </p>
                 </div>
                 <div>
-                    <p className='font-bold'> Delegate </p>
+                    <p className='font-bold text-lg'> Delegate </p>
                     <p className='break-all'> { currentDelegate } </p>
                 </div>
             </div>

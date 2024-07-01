@@ -47,7 +47,7 @@ const Send = ({
             <ErrorModal { ...{ error, setError }}  />
             <TransactionResultModal { ...{txHash, setTxHash }} />
             <div className='bg-grey-20 flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
-                <p className='font-bold'> Send </p>
+                <p className='font-bold text-lg'> Send </p>
                 <div className='flex gap-x-8'>
                     <TextInput
                         id={'recipientAddress'}
