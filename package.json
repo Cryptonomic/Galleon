@@ -2,13 +2,55 @@
   "name": "galleon",
   "version": "1.5.0",
   "description": "Wallet software for the Tezos blockchain",
-  "main": "./src/electron.js",
+  "main": "./public/electron.js",
   "scripts": {
+    "start": "concurrently \"npm run webpack-start\" \"npm run electron-start\"",
+    "webpack-start": "webpack serve --mode development --env development",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "start": "concurrently \"webpack serve --mode development --env development\" \"wait-on http://localhost:9000 && electron .\""
+    "dist": "npm run build && electron-builder",
+    "electron-start": "wait-on tcp:9000 && electron .",
+    "postinstall": "electron-builder install-app-deps",
+    "preelectron-pack": "npm build"
   },
-  "author": "",
+  "author": {
+    "name": "Cryptonomic Inc",
+    "email": "info@cryptonomic.tech"
+  },
+  "build": {
+    "appId": "tech.cryptonomic.tezori",
+    "productName": "Galleon",
+    "files": [
+      "public/**/*",
+      "src/**/*",
+      "dist/**/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ]
+    }
+  },
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.24.7",
@@ -44,6 +86,7 @@
     "bs58check": "^4.0.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
+    "electron-is-dev": "^3.0.1",
     "libsodium-wrappers-sumo": "^0.7.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
