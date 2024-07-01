@@ -8,6 +8,7 @@ import Send from '../components/Send';
 import Delegate from '../components/Delegate';
 import ExportPrivateKey from '../components/ExportPrivateKey';
 import ErrorModal from '../components/ErrorModal';
+import AssetLinks from '../components/AssetLinks';
 
 const Home: React.FC = () => {
     const [tezosNodeAddress, setTezosNodeAddress] = useState('https://rpc.tzbeta.net/');
@@ -64,6 +65,7 @@ const Home: React.FC = () => {
                     walletAddress={address}
                     tezosNodeAddress={tezosNodeAddress}
                 />
+                <AssetLinks walletAddress={address} />
                 <Send
                     tezosNodeAddress={tezosNodeAddress}
                     walletFileContents={walletFileContents}
