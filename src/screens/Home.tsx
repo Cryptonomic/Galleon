@@ -9,6 +9,7 @@ import Delegate from '../components/Delegate';
 import ExportPrivateKey from '../components/ExportPrivateKey';
 import ErrorModal from '../components/ErrorModal';
 import AssetLinks from '../components/AssetLinks';
+import Footer from '../components/Footer';
 
 const Home: React.FC = () => {
     const [tezosNodeAddress, setTezosNodeAddress] = useState('https://rpc.tzbeta.net/');
@@ -80,6 +81,7 @@ const Home: React.FC = () => {
                     walletFileContents={walletFileContents}
                 />
             </div>
+            <Footer />
         </>
     );
 };
