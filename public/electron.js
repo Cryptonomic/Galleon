@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell } = require('electron');
+const { app, BrowserWindow, shell, screen } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -17,9 +17,11 @@ const createWindow = async() => {
   // Dynamic import for electron-is-dev
   const { default: isDev } = await import('electron-is-dev');
 
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
   const mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 768,
+    width: width,
+    height: height,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
