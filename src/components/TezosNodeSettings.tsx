@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Modal from './Modal';
 import Button from './Button';
 
+import config from '../config.json';
+
 const TezosNodeSettings = ({
     tezosNodeAddress,
     setTezosNodeAddress,
@@ -29,7 +31,7 @@ const TezosNodeSettings = ({
                     <div className='flex flex-col gap-4'>
                         <div>
                             <p> Default Tezos Node </p>
-                            <p className='font-light'> https://rpc.tzbeta.net/ (Tezos Foundation) </p>
+                            <p className='font-light'> {config.defaultNode} (Tezos Foundation) </p>
                         </div>
 
                         <div>

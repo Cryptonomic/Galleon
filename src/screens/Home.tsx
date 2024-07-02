@@ -11,8 +11,10 @@ import ErrorModal from '../components/ErrorModal';
 import AssetLinks from '../components/AssetLinks';
 import Footer from '../components/Footer';
 
+import config from '../config.json';
+
 const Home: React.FC = () => {
-    const [tezosNodeAddress, setTezosNodeAddress] = useState('https://rpc.tzbeta.net/');
+    const [tezosNodeAddress, setTezosNodeAddress] = useState(config.defaultNode);
     const [file, setFile] = useState<File | null>(null);
     const [passphrase, setPassphrase] = useState<string>('');
     const [address, setAddress] = useState<string>('');
