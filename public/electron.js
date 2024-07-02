@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -40,6 +40,12 @@ const createWindow = async() => {
 
   // Remove the menu bar
   mainWindow.setMenu(null);
+
+  // Open URL in user's browser.
+  mainWindow.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url);
+    return { action: "deny" };
+  })
 
   // if(isDev) {
     // Open the DevTools.
