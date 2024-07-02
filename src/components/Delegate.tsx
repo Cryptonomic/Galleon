@@ -34,10 +34,12 @@ const Delegate = ({
                     delegateAddress,
                     tezosNodeAddress
                 );
+                setDelegateAddress('');
                 setTxHash(txHash);
             }
         } catch (error: any) {
             setError('Failed to delegate: ' + error.message);
+            setIsTXResultModal(false);
         } finally {
             setPassphrase('');
         }
