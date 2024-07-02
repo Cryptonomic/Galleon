@@ -1,9 +1,9 @@
 import React from 'react';
 
-import galleonLogo from '../assets/logo.png';
-import openIcon from '../assets/open.png';
-import settingsIcon from '../assets/settings.png';
-import helpIcon from '../assets/help.png';
+const galleonLogo = require('../assets/logo.png').default;
+const openIcon = require('../assets/open.png').default;
+const settingsIcon = require('../assets/settings.png').default;
+const helpIcon = require('../assets/help.png').default;
 
 import config from '../config.json';
 

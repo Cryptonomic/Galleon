@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Button from './Button';
 import { RpcClient } from '@taquito/rpc';
 
-import refreshIcon from '../assets/refresh_icon.png';
+const refreshIcon = require('../assets/refresh_icon.png').default;
 
-const WalletDetails = ({
+const AccountDetails = ({
     walletAddress,
     tezosNodeAddress
 }: {
@@ -15,14 +15,18 @@ const WalletDetails = ({
     const [currentDelegate, setCurrentDelegate] = useState<string | null>('');
 
     const handleRefresh = async () => {
-        if(walletAddress) {
-            const client = new RpcClient(tezosNodeAddress);
-            const balanceInMutez = await client.getBalance(walletAddress);
-            const balanceInTez = balanceInMutez.toNumber() / 1000000;
-            setAccountBalance(balanceInTez);
+        try {
+            if(walletAddress) {
+                const client = new RpcClient(tezosNodeAddress);
+                const balanceInMutez = await client.getBalance(walletAddress);
+                const balanceInTez = balanceInMutez.toNumber() / 1000000;
+                setAccountBalance(balanceInTez);
 
-            const delegateAddress = await client.getDelegate(walletAddress);
-            setCurrentDelegate(delegateAddress);
+                const delegateAddress = await client.getDelegate(walletAddress);
+                setCurrentDelegate(delegateAddress);
+            }
+        } catch (error) {
+            console.log('Failed to fetch account details: ' + error);
         }
     }
 
@@ -58,4 +62,4 @@ const WalletDetails = ({
     )
 }
 
-export default WalletDetails;
+export default AccountDetails;

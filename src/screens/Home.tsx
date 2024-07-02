@@ -58,9 +58,9 @@ const Home: React.FC = () => {
                 <UploadWallet
                     handleFileChange={handleFileChange}
                     passphrase={passphrase}
-                    setPassphrase={(e) => setPassphrase(e.target.value)}
+                    setPassphrase={setPassphrase}
                     unlockWallet={handleUnlockWallet}
-                    disabled={!file || !passphrase || isWalletOpen}
+                    disabled={!file || isWalletOpen}
                 />
                 <AccountDetails
                     walletAddress={address}
