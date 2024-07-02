@@ -24,17 +24,20 @@ const PasswordModal = ({
                 open={isPasswordModal}
                 onClose={() => setIsPasswordModal(false)}
             >
-                <div className='flex flex-wrap gap-8'>
-                  <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
-                  <Button
-                      text={'Unlock'}
-                      onButtonClick={(e) =>{
-                          onUnlockWallet(e);
-                          setIsPasswordModal(false);
-                      }}
-                      disabled={!passphrase}
-                  />
-                </div>
+                <>
+                  <p className='font-medium text-center pb-9'> Enter Passphrase to Unlock </p>
+                  <div className='flex flex-wrap justify-center items-end gap-8'>
+                    <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
+                    <Button
+                        text={'Unlock'}
+                        onButtonClick={(e) =>{
+                            onUnlockWallet(e);
+                            setIsPasswordModal(false);
+                        }}
+                        disabled={!passphrase}
+                    />
+                  </div>
+                </>
             </Modal>
         </>
     )
