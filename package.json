@@ -18,7 +18,7 @@
     "email": "info@cryptonomic.tech"
   },
   "build": {
-    "appId": "tech.cryptonomic.tezori",
+    "appId": "tech.cryptonomic.galleon",
     "productName": "Galleon",
     "files": [
       "public/**/*",
