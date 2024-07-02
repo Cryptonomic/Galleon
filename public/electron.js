@@ -30,10 +30,7 @@ const createWindow = async() => {
 
   const startUrl = isDev
     ? 'http://localhost:3000'
-    // : `file://${path.join(__dirname, 'build', 'index.html')}`;
     : `file://${path.join(__dirname, '../dist/index.html')}`;
-    // Determine the correct path based on environment
-
 
   mainWindow.loadURL(startUrl);
 
@@ -49,10 +46,10 @@ const createWindow = async() => {
     return { action: "deny" };
   })
 
-  // if(isDev) {
+  if(isDev) {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
-  // }
+  }
 
 }
 
