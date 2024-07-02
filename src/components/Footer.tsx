@@ -5,11 +5,13 @@ const Footer = () => {
         <div>
             <p className='text-xs font-light pt-6 pb-10 text-center'> {`[帆船ウォレット]`} </p>
             <div className='flex flex-wrap justify-center items-center gap-4'>
-                <p className='text-black text-sm font-light'> Copyright 2024, Cryptonomic Inc. </p>
-                <a href={'#'} target='_blank' rel='noopener noreferrer' className='text-sky-30 text-xs'>
+                <a href={'https://cryptonomic.tech/'} target='_blank' rel='noopener noreferrer' className='text-black text-sm font-light'>
+                    Copyright 2024, Cryptonomic Inc.
+                </a>
+                <a href={'https://github.com/Cryptonomic/Deployments/blob/master/Terms_of_Service.pdf'} target='_blank' rel='noopener noreferrer' className='text-sky-30 text-xs'>
                     Terms of Service
                 </a>
-                <a href={'#'} target='_blank' rel='noopener noreferrer' className='text-sky-30 text-xs'>
+                <a href={'https://github.com/Cryptonomic/Deployments/blob/master/Terms_of_Service.pdf'} target='_blank' rel='noopener noreferrer' className='text-sky-30 text-xs'>
                     Privacy Policy
                 </a>
             </div>
