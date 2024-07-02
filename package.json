@@ -9,7 +9,7 @@
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "dist": "npm run build && electron-builder",
-    "electron-start": "wait-on tcp:9000 && electron .",
+    "electron-start": "wait-on tcp:3000 && electron .",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "npm build"
   },
