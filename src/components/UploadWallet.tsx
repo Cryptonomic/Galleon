@@ -24,7 +24,7 @@ const UploadWallet = ({
                 { ...{passphrase, setPassphrase, isPasswordModal, setIsPasswordModal }}
                 onUnlockWallet={unlockWallet}
             />
-            <div className='bg-sky-20 py-4 px-6 border rounded-lg'>
+            <div className='bg-sky-60 p-6 pb-8 border border-sky-50 rounded-lg mb-10'>
             <div className='flex flex-wrap gap-2 justify-between'>
                 <p className='font-bold text-2xl'> Open Existing Wallet </p>
                 <a
@@ -39,7 +39,7 @@ const UploadWallet = ({
                         <img src={openIcon} alt='open' className='w-6 h-6' />
                 </a>
             </div>
-            <div className='flex flex-wrap items-end gap-y-2 gap-x-8'>
+            <div className='flex flex-wrap items-end gap-y-2 gap-x-8 mt-2'>
                 <div>
                 <input type="file" onChange={handleFileChange} className='w-[242px]'/>
                 </div>
