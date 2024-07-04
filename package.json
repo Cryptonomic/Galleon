@@ -38,7 +38,13 @@
       "target": [
         "dmg",
         "zip"
-      ]
+      ],
+      "hardenedRuntime": true,
+      "entitlements": "./entitlements/entitlements.mac.plist",
+      "entitlementsInherit": "./entitlements/entitlements.mac.plist"
+    },
+    "dmg": {
+      "sign": true
     },
     "win": {
       "target": [
@@ -51,7 +57,8 @@
         "AppImage",
         "deb",
         "rpm"
-      ]
+      ],
+      "category": "Finance"
     }
   },
   "license": "ISC",
