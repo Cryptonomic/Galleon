@@ -41,7 +41,6 @@ const UploadWallet = ({
             </div>
             <div className='flex flex-wrap items-end gap-y-2 gap-x-8'>
                 <div>
-                <p> Upload Wallet </p>
                 <input type="file" onChange={handleFileChange} className='w-[242px]'/>
                 </div>
                 <Button
