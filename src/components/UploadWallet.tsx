@@ -26,7 +26,7 @@ const UploadWallet = ({
             />
             <div className='bg-sky-20 py-4 px-6 border rounded-lg'>
             <div className='flex flex-wrap gap-2 justify-between'>
-                <p className='font-bold'> Open Existing Wallet </p>
+                <p className='font-bold text-2xl'> Open Existing Wallet </p>
                 <a
                         href={'https://discourse.cryptonomic.tech/t/accessing-a-ledger-account/510'}
                         target='_blank'
