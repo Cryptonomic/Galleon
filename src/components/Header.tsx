@@ -26,38 +26,38 @@ const Header = ({
               <div className='w-[150px] h-[40px]'>
                 <img src={galleonLogo} alt='galleon' className='w-full h-full' />
               </div>
-              <div className='flex flex-wrap items-center text-sm sm:text-base'>
-                  <p className='p-4 border-r'> Version {config.version} </p>
+              <div className='flex flex-wrap items-center text-sm text-sky-40 sm:text-base'>
+                  <p className='text-sky p-4 border-r'> Version {config.version} </p>
                   <a
                       href={'https://discourse.cryptonomic.tech/t/creating-a-new-wallet-file/509'}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='flex gap-1 uppercase p-4 font-medium border-r '
+                      className='flex gap-1 items-center normal-case p-4 font-medium border-r '
                   >
                     <span>
-                      CREATE NEW WALLET
+                      Create new wallet
                     </span>
-                    <img src={openIcon} alt='open' className='w-6 h-6' />
+                    <img src={openIcon} alt='open' className='w-[18px] h-[18px]' />
                   </a>
                   <button
                       onClick={() => setIsNodeSettingsModal(true)}
-                      className='flex gap-1 uppercase p-4 font-medium border-r '
+                      className='flex gap-1 items-center normal-case p-4 font-medium border-r '
                   >
                       <span>
-                        Tezos Node
+                        Tezos node
                       </span>
-                      <img src={settingsIcon} alt='open' className='w-6 h-6' />
+                      <img src={settingsIcon} alt='open' className='w-[18px] h-[18px]' />
                   </button>
                   <a
                       href={'https://discourse.cryptonomic.tech/tags/c/public/galleon-ext/22/faq'}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='flex flex-col items-center gap-1 uppercase p-4 font-medium '
+                      className='flex gap-1 items-center normal-case p-4 font-medium '
                   >
-                    <img src={helpIcon} alt='open' className='w-6 h-6' />
                     <span>
                         Help
                     </span>
+                    <img src={helpIcon} alt='open' className='w-[18px] h-[18px]' />
                   </a>
               </div>
           </div>
