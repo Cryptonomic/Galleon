@@ -11,7 +11,7 @@ const AccountDetails = ({
     walletAddress: string;
     tezosNodeAddress: string;
 }) => {
-    const [accountBalance, setAccountBalance] = useState(0);
+    const [accountBalance, setAccountBalance] = useState<number | undefined>();
     const [currentDelegate, setCurrentDelegate] = useState<string | null>('');
 
     const handleRefresh = async () => {
@@ -51,13 +51,21 @@ const AccountDetails = ({
             <div className='flex flex-wrap gap-y-2 gap-x-[3.75rem]'>
                 <div>
                     <p className='font-bold text-lg'> Balance </p>
-                    <p> { accountBalance } ꜩ </p>
+                    {walletAddress &&
+                        <p> {accountBalance && `${accountBalance} ꜩ`} </p>
+                    }
                 </div>
                 <div>
                     <p className='font-bold text-lg'> Delegate </p>
                     <p className='break-all'> { currentDelegate } </p>
                 </div>
             </div>
+                {!walletAddress &&
+                    <p className='opacity-50'> Open wallet file to see account details </p>
+                }
+                {(walletAddress && !accountBalance) &&
+                    <p className='opacity-50'> Refresh to see account details </p>
+                }
         </div>
     )
 }
