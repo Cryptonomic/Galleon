@@ -16,7 +16,7 @@ module.exports = {
             directory: path.join(__dirname, 'dist'),
         },
         compress: true,
-        port: 9000,
+        port: 3000,
         hot: true
     },
     module: {
@@ -43,6 +43,7 @@ module.exports = {
                     options: {
                         name: '[name].[ext]',
                         outputPath: 'assets/',
+                        publicPath: 'assets/',
                     },
                     },
                 ],
@@ -51,7 +52,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'index.html'
+            template: './public/index.html'
         }),
         new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer'], // Polyfill for Buffer

@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { sendTransaction } from '../utils/WalletUtils';
 
 import TextInput from './TextInput';
-import PassphraseInput from './PassphraseInput';
 import Button from './Button';
 import ErrorModal from './ErrorModal';
-import TransactionResultModal from './TransactionResultModal';
+import TXResultModal from './TXResultModal';
+import PasswordModal from './PasswordModal';
 
 const Send = ({
     tezosNodeAddress,
@@ -21,9 +21,17 @@ const Send = ({
     const [error, setError] = useState<string | null>(null);
     const [txHash, setTxHash] = useState('');
     const [passphrase, setPassphrase] = useState<string>('');
+    const [isTXResultModal, setIsTXResultModal] = useState(false);
+    const [isPasswordModal, setIsPasswordModal] = useState(false);
+
+    const clearInputFields = async() => {
+        setRecipientAddress('');
+        setAmount('');
+    }
 
     const handleSend = async() => {
         console.log('Sending:', amount, 'to', recipientAddress);
+        setIsTXResultModal(true);
         try {
             if (walletFileContents) {
                 const txHash = await sendTransaction(
@@ -33,10 +41,12 @@ const Send = ({
                     parseFloat(amount),
                     tezosNodeAddress
                 );
+                clearInputFields();
                 setTxHash(txHash);
             }
         } catch (error: any) {
             setError('Failed to send transaction: ' + error.message);
+            setIsTXResultModal(false);
         } finally {
             setPassphrase('');
         }
@@ -45,10 +55,14 @@ const Send = ({
     return (
         <>
             <ErrorModal { ...{ error, setError }}  />
-            <TransactionResultModal { ...{txHash, setTxHash }} />
-            <div className='flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-3xl'>
-                <p className='font-bold'> Send </p>
-                <div className='flex gap-x-8'>
+            <PasswordModal
+                { ...{passphrase, setPassphrase, isPasswordModal, setIsPasswordModal }}
+                onUnlockWallet={handleSend}
+            />
+            <TXResultModal { ...{txHash, isTXResultModal, setIsTXResultModal }} />
+            <div className='bg-grey-20 flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
+                <p className='font-bold text-lg'> Send </p>
+                <div className='flex flex-wrap gap-x-8 gap-y-4 items-end'>
                     <TextInput
                         id={'recipientAddress'}
                         label={'Recipient Address'}
@@ -68,13 +82,10 @@ const Send = ({
                         }}
                         className={'w-[212px]'}
                     />
-                </div>
-                <div className='flex flex-wrap items-end gap-y-2 gap-x-8'>
-                    <PassphraseInput value={passphrase} onChange={(e) => setPassphrase(e.target.value)} />
                     <Button
                         text={'Send'}
-                        onButtonClick={handleSend}
-                        disabled={!isWalletOpen || !passphrase || !amount || !recipientAddress || !walletFileContents}
+                        onButtonClick={() => setIsPasswordModal(true)}
+                        disabled={!isWalletOpen || !amount || !recipientAddress || !walletFileContents}
                     />
                 </div>
             </div>

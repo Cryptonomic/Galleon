@@ -3,14 +3,18 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import UploadWallet from '../components/UploadWallet';
 import { unlockWallet } from '../utils/WalletUtils';
-import WalletDetails from '../components/WalletDetails';
+import AccountDetails from '../components/AccountDetails';
 import Send from '../components/Send';
 import Delegate from '../components/Delegate';
 import ExportPrivateKey from '../components/ExportPrivateKey';
 import ErrorModal from '../components/ErrorModal';
+import AssetLinks from '../components/AssetLinks';
+import Footer from '../components/Footer';
+
+import config from '../config.json';
 
 const Home: React.FC = () => {
-    const [tezosNodeAddress, setTezosNodeAddress] = useState('https://rpc.tzbeta.net/');
+    const [tezosNodeAddress, setTezosNodeAddress] = useState(config.defaultNode);
     const [file, setFile] = useState<File | null>(null);
     const [passphrase, setPassphrase] = useState<string>('');
     const [address, setAddress] = useState<string>('');
@@ -51,19 +55,20 @@ const Home: React.FC = () => {
     return (
         <>
             <ErrorModal { ...{ error, setError } }  />
-            <Header tezosNodeAddress={tezosNodeAddress} setTezosNodeAddress={(e: React.ChangeEvent<HTMLInputElement>) => setTezosNodeAddress(e.target.value)} />
+            <Header { ...{tezosNodeAddress, setTezosNodeAddress }} />
             <div className='w-70% lg:w-[773px] flex flex-col gap-y-2 mx-auto pt-12'>
                 <UploadWallet
                     handleFileChange={handleFileChange}
                     passphrase={passphrase}
-                    setPassphrase={(e) => setPassphrase(e.target.value)}
+                    setPassphrase={setPassphrase}
                     unlockWallet={handleUnlockWallet}
-                    disabled={!file || !passphrase || isWalletOpen}
+                    disabled={!file || isWalletOpen}
                 />
-                <WalletDetails
+                <AccountDetails
                     walletAddress={address}
                     tezosNodeAddress={tezosNodeAddress}
                 />
+                <AssetLinks walletAddress={address} />
                 <Send
                     tezosNodeAddress={tezosNodeAddress}
                     walletFileContents={walletFileContents}
@@ -78,6 +83,7 @@ const Home: React.FC = () => {
                     walletFileContents={walletFileContents}
                 />
             </div>
+            <Footer />
         </>
     );
 };
