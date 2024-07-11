@@ -46,6 +46,7 @@
       "entitlementsInherit": "./entitlements/entitlements.mac.plist",
       "gatekeeperAssess": false
     },
+    "afterSign": "./scripts/notarize.js",
     "dmg": {
       "sign": true
     },
