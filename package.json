@@ -41,10 +41,12 @@
       ],
       "hardenedRuntime": true,
       "entitlements": "./entitlements/entitlements.mac.plist",
-      "entitlementsInherit": "./entitlements/entitlements.mac.plist"
-    },
-    "dmg": {
-      "sign": true
+      "entitlementsInherit": "./entitlements/entitlements.mac.plist",
+      "icon": "icon.png",
+      "provisioningProfile": "/Users/vishakh/Downloads/Galleon_DMG.provisionprofile",
+      "notarize": {
+        "teamId": "G7QQMG8Q65"
+      }
     },
     "win": {
       "target": [
