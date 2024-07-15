@@ -84,7 +84,7 @@ const Home: React.FC = () => {
                     walletFileContents={walletFileContents}
                 />
 
-                <KT1Delegation />
+                <KT1Delegation { ...{ walletFileContents, isWalletOpen }} />
             </div>
             <Footer />
         </>
