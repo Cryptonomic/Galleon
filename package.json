@@ -47,9 +47,12 @@
       "sign": true
     },
     "win": {
+      "publisherName": "Cryptonomic",
+      "icon": "./src/assets/logo.png",
       "target": [
         "nsis",
-        "zip"
+        "zip",
+        "appx"
       ]
     },
     "linux": {
@@ -59,6 +62,16 @@
         "rpm"
       ],
       "category": "Finance"
+    },
+    "appx": {
+      "displayName": "Galleon",
+      "identityName": "Cryptonomic.Galleon",
+      "languages": [
+        "en-US"
+      ],
+      "publisherDisplayName": "Cryptonomic",
+      "publisher": "CN=9C32EF6F-E6BC-4F24-A1B0-94EE444371C8",
+      "setBuildNumber": true
     }
   },
   "license": "ISC",
