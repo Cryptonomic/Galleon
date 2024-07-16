@@ -142,3 +142,43 @@ export async function delegate(
         throw error
     }
 }
+
+
+
+export async function withdraw(
+    walletFileContents: string,
+    passphrase: string,
+    contractAddress: string,
+    amount: number,
+    tezosNodeAddress: string
+): Promise<string> {
+
+    const { privateKey, address } = await unlockWallet(walletFileContents, passphrase);
+
+    const tezos = new TezosToolkit(tezosNodeAddress);
+
+    tezos.setProvider({
+        signer: new InMemorySigner(privateKey)
+    });
+    const contract1 = await tezos.contract.at(contractAddress);
+    console.log({tezos})
+    console.log({contract1})
+
+    try {
+        // Withdraw the funds
+        const contract = await tezos.contract.at(contractAddress);
+        const op = await contract.methods.transfer({
+            to: address,
+            amount: amount // Amount is in tez (1 tez = 1,000,000 microtez)
+        }).send();
+
+        // Confirm the transaction
+        const confirmation = await op.confirmation(1);
+        console.log(`Transaction successfully included in block: ${confirmation}`);
+        console.log(`Operation hash: ${op.opHash}`);
+        return op.opHash;
+    } catch (error) {
+        console.error(`Error in withdrawing tez: ${error}`);
+        throw error
+    }
+}

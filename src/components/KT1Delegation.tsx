@@ -3,6 +3,7 @@ import Amount from './Amount';
 import PasswordModal from './PasswordModal';
 import TXResultModal from './TXResultModal';
 import ErrorModal from './ErrorModal';
+import { withdraw } from '../utils/WalletUtils';
 
 const openIcon = require('../assets/open.png').default;
 
@@ -53,40 +54,46 @@ const DelegationContractDetails = ({
 
 const KT1Delegation = ({
     walletFileContents,
-    isWalletOpen
+    isWalletOpen,
+    tezosNodeAddress,
 }:{
     walletFileContents: string;
     isWalletOpen: boolean;
+    tezosNodeAddress: string;
 }) => {
     const [isDelegationContract, setIsDelegationContract] = useState(true);
 
     const [error, setError] = useState<string | null>(null);
     const [txHash, setTxHash] = useState('');
+
     const [passphrase, setPassphrase] = useState<string>('');
     const [isTXResultModal, setIsTXResultModal] = useState(false);
     const [isPasswordModal, setIsPasswordModal] = useState(false);
 
+    const [currentContractAddress, setCurrentContractAddress] = useState('');
+
     const [amount, setAmount] = useState('');
 
+    // TODO: get contract addresses
     const delegationContracts = [
+        { contractAddress: 'KT1H5b7LxEExkFd2Tng77TfuWbM5aPvHstPr', balance: 22.019709 },
         { contractAddress: 'KT1SjXiUX63QvdNMcM2m492f7kuf8JxXRLp4', balance: 12.019709 },
-        { contractAddress: 'KT1BjXiKV67rvdZMcK4m492I7kuf8JkXRhu7', balance: 2.024934 },
+        { contractAddress: 'KT1MCXxbtS62tk4CUxv29BHnqTBtvsFFGzBm', balance: 2.024934 },
     ];
 
-    const handleWithdrawal = () => {
+    const handleWithdrawal = async() => {
         try {
-            console.log("withdrawaing", amount)
-            // TODO: Add withdrawal function
-            // if (walletFileContents) {
-            //     const txHash = await sendTransaction(
-            //         walletFileContents,
-            //         passphrase,
-            //         recipientAddress,
-            //         parseFloat(amount),
-            //         tezosNodeAddress
-            //     );
-            //     setTxHash(txHash);
-            // }
+            console.log("withdrawaing", amount, 'from: ', currentContractAddress)
+            if (walletFileContents) {
+                const txHash = await withdraw(
+                    walletFileContents,
+                    passphrase,
+                    currentContractAddress,
+                    parseFloat(amount),
+                    tezosNodeAddress
+                );
+                setTxHash(txHash);
+            }
         } catch (error) {
             setIsTXResultModal(false);
         } finally {
@@ -129,6 +136,7 @@ const KT1Delegation = ({
                                 onClickWithdraw={(amount) => {
                                     setAmount(amount);
                                     setIsPasswordModal(true);
+                                    setCurrentContractAddress(contractAddress);
                                 }}
                                 disabled={!walletFileContents || !isWalletOpen}
                             />
