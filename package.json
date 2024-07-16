@@ -26,8 +26,8 @@
     "files": [
       "public/**/*",
       "src/**/*",
-      "dist/**/*",
       "build/**/*",
+        "assets/**/*",
       "node_modules/**/*",
       "package.json"
     ],
@@ -56,10 +56,12 @@
       ]
     },
     "linux": {
+      "icon": "./src/assets/256x256.png",
       "target": [
         "AppImage",
         "deb",
-        "rpm"
+        "rpm",
+        "snap"
       ],
       "category": "Finance"
     },

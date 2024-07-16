@@ -1,0 +1,36 @@
+name: galleon-wallet
+version: '1.5.0'
+summary: Wallet software for the Tezos blockchain
+description: |
+  Galleon is a secure and user-friendly wallet for managing Tezos tokens.
+
+grade: stable # or devel if it's a development build
+confinement: strict
+base: core20 # or core18/core22 depending on your needs
+
+apps:
+  galleon:
+    command: desktop-launch $SNAP/galleon/galleon
+    plugs:
+      - desktop
+      - desktop-legacy
+      - x11
+      - wayland
+      - unity7
+      - browser-support
+      - network
+      - gsettings
+      - pulseaudio
+
+parts:
+  galleon:
+    plugin: dump
+    source: .
+    organize:
+      dist/linux-unpacked: galleon
+    stage-packages:
+      - libnotify4
+      - libnss3
+      - libxss1
+      - libappindicator3-1
+      - libxtst6
