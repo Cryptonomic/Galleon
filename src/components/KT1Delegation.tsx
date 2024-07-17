@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Amount from './Amount';
 import PasswordModal from './PasswordModal';
 import TXResultModal from './TXResultModal';
 import ErrorModal from './ErrorModal';
-import { withdraw } from '../utils/WalletUtils';
+import { getDelegatorContracts, withdraw } from '../utils/WalletUtils';
 
 const openIcon = require('../assets/open.png').default;
 
 const EmptyDelegationState = () => {
     return(
-        <>
+        <div className='w-[498px] text-lg'>
             <p className='font-bold text-lg'> Legacy KT1 Delegation Contracts </p>
             <div className='flex flex-col gap-7 py-7'>
                 <p className='text-sky-70'> No legacy KT1 delegation contracts found. </p>
                 <p className='text-sky-70'> Legacy KT1 contracts were an older way to delegate funds. You no longer need to use them.</p>
             </div>
-        </>
+        </div>
     )
 }
-
 
 const DelegationContractDetails = ({
     contractAddress,
@@ -51,17 +50,17 @@ const DelegationContractDetails = ({
     )
 }
 
-
 const KT1Delegation = ({
     walletFileContents,
     isWalletOpen,
     tezosNodeAddress,
+    walletAddress
 }:{
     walletFileContents: string;
     isWalletOpen: boolean;
     tezosNodeAddress: string;
+    walletAddress: string;
 }) => {
-    const [isDelegationContract, setIsDelegationContract] = useState(true);
 
     const [error, setError] = useState<string | null>(null);
     const [txHash, setTxHash] = useState('');
@@ -71,19 +70,12 @@ const KT1Delegation = ({
     const [isPasswordModal, setIsPasswordModal] = useState(false);
 
     const [currentContractAddress, setCurrentContractAddress] = useState('');
+    const [delegationContracts, setDelegationContracts] = useState([]);
 
     const [amount, setAmount] = useState('');
 
-    // TODO: get contract addresses
-    const delegationContracts = [
-        { contractAddress: 'KT1H5b7LxEExkFd2Tng77TfuWbM5aPvHstPr', balance: 22.019709 },
-        { contractAddress: 'KT1SjXiUX63QvdNMcM2m492f7kuf8JxXRLp4', balance: 12.019709 },
-        { contractAddress: 'KT1MCXxbtS62tk4CUxv29BHnqTBtvsFFGzBm', balance: 2.024934 },
-    ];
-
     const handleWithdrawal = async() => {
         try {
-            console.log("withdrawaing", amount, 'from: ', currentContractAddress)
             if (walletFileContents) {
                 const txHash = await withdraw(
                     walletFileContents,
@@ -102,6 +94,16 @@ const KT1Delegation = ({
         }
     }
 
+    useEffect(() => {
+        (async() => {
+            if(walletAddress) {
+                const result = await getDelegatorContracts(walletAddress);
+                setDelegationContracts(result);
+            }
+        })()
+    }, [walletAddress])
+
+
     return (
         <>
             <ErrorModal { ...{ error, setError }}  />
@@ -111,7 +113,7 @@ const KT1Delegation = ({
             />
             <TXResultModal { ...{txHash, isTXResultModal, setIsTXResultModal }} />
             <div className='bg-grey-20 flex flex-col gap-2 p-6 pb-8 mt-4 border border-grey-10 rounded-lg'>
-            {isDelegationContract
+            {delegationContracts && delegationContracts.length > 0
                 ? <>
                     <div className='flex justify-between'>
                     <p className='font-bold text-lg'> Delegation Contracts </p>
@@ -132,7 +134,7 @@ const KT1Delegation = ({
                             <DelegationContractDetails
                                 key={index}
                                 contractAddress={contractAddress}
-                                balance={balance}
+                                balance={balance / 1000000}
                                 onClickWithdraw={(amount) => {
                                     setAmount(amount);
                                     setIsPasswordModal(true);

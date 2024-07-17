@@ -182,3 +182,18 @@ export async function withdraw(
         throw error
     }
 }
+
+export async function getDelegatorContracts(tz1Address: string) {
+    try {
+        const response = await fetch(`https://api.tzkt.io/v1/accounts/${tz1Address}/contracts`);
+
+        const delegationContracts = await response.json();
+        return delegationContracts.map((delegationContract: { address: string; balance: string; }) => ({
+            contractAddress: delegationContract.address,
+            balance: delegationContract.balance
+        }));
+    } catch (error) {
+        console.error('Error fetching delegation contracts:', error);
+        throw error;
+    }
+}
