@@ -86,7 +86,8 @@ const KT1Delegation = ({
                 );
                 setTxHash(txHash);
             }
-        } catch (error) {
+        } catch (error: any) {
+            setError('Failed to delegate: ' + error.message);
             setIsTXResultModal(false);
         } finally {
             setPassphrase('');
@@ -97,8 +98,12 @@ const KT1Delegation = ({
     useEffect(() => {
         (async() => {
             if(walletAddress) {
-                const result = await getDelegatorContracts(walletAddress);
-                setDelegationContracts(result);
+                try {
+                    const result = await getDelegatorContracts(walletAddress);
+                    setDelegationContracts(result);
+                } catch (error: any) {
+                    setError('Failed to get delegator contracts: ' + error.message);
+                }
             }
         })()
     }, [walletAddress])
