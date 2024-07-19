@@ -81,7 +81,7 @@ const KT1Delegation = ({
                     walletFileContents,
                     passphrase,
                     currentContractAddress,
-                    parseFloat(amount),
+                    amount,
                     tezosNodeAddress
                 );
                 setTxHash(txHash);

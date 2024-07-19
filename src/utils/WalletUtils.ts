@@ -149,7 +149,7 @@ export async function withdraw(
     walletFileContents: string,
     passphrase: string,
     contractAddress: string,
-    amount: number,
+    amount: string,
     tezosNodeAddress: string
 ): Promise<string> {
 
@@ -160,17 +160,12 @@ export async function withdraw(
     tezos.setProvider({
         signer: new InMemorySigner(privateKey)
     });
-    const contract1 = await tezos.contract.at(contractAddress);
-    console.log({tezos})
-    console.log({contract1})
 
     try {
         // Withdraw the funds
         const contract = await tezos.contract.at(contractAddress);
-        const op = await contract.methods.transfer({
-            to: address,
-            amount: amount // Amount is in tez (1 tez = 1,000,000 microtez)
-        }).send();
+
+        const op = await contract.methodsObject.do(withdrawFromKT1(address, amount)).send();
 
         // Confirm the transaction
         const confirmation = await op.confirmation(1);
@@ -198,4 +193,55 @@ export async function getDelegatorContracts(tz1Address: string) {
         console.error('Error fetching delegation contracts:', error);
         throw error;
     }
+}
+
+
+const withdrawFromKT1 = (managerAddress: string, amountInMutez: string) => {
+    return [
+        {
+            "prim":"DROP"
+        },
+        {
+            "prim":"NIL",
+            "args":[
+                {
+                "prim":"operation"
+                }
+            ]
+        },
+        {
+            "prim":"PUSH",
+            "args":[
+                {
+                "prim":"key_hash"
+                },
+                {
+                "string": managerAddress
+                }
+            ]
+        },
+        {
+            "prim":"IMPLICIT_ACCOUNT"
+        },
+        {
+            "prim":"PUSH",
+            "args":[
+                {
+                "prim": "mutez"
+                },
+                {
+                "int": amountInMutez
+                }
+            ]
+        },
+        {
+            "prim":"UNIT"
+        },
+        {
+            "prim":"TRANSFER_TOKENS"
+        },
+        {
+            "prim":"CONS"
+        }
+    ]
 }
