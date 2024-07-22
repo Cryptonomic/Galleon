@@ -16,7 +16,7 @@ const Button = ({
             <button
                 onClick={onButtonClick}
                 disabled={disabled}
-                className='bg-sky-30 flex items-center gap-2 font-medium text-white min-w-fit py-2 px-6 rounded-2xl disabled:opacity-50'
+                className='bg-sky-30 flex items-center gap-2 font-medium text-white min-w-fit py-1.5 px-6 rounded-2xl disabled:opacity-50'
             >
                 {iconSrc &&
                     <span>

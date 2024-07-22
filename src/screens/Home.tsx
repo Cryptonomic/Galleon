@@ -10,6 +10,7 @@ import ExportPrivateKey from '../components/ExportPrivateKey';
 import ErrorModal from '../components/ErrorModal';
 import AssetLinks from '../components/AssetLinks';
 import Footer from '../components/Footer';
+import KT1Delegation from '../components/KT1Delegation';
 
 import config from '../config.json';
 
@@ -81,6 +82,11 @@ const Home: React.FC = () => {
                 />
                 <ExportPrivateKey
                     walletFileContents={walletFileContents}
+                />
+
+                <KT1Delegation
+                    { ...{ walletFileContents, isWalletOpen, tezosNodeAddress }}
+                    walletAddress={address}
                 />
             </div>
             <Footer />

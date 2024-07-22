@@ -142,3 +142,106 @@ export async function delegate(
         throw error
     }
 }
+
+
+
+export async function withdraw(
+    walletFileContents: string,
+    passphrase: string,
+    contractAddress: string,
+    amount: string,
+    tezosNodeAddress: string
+): Promise<string> {
+
+    const { privateKey, address } = await unlockWallet(walletFileContents, passphrase);
+
+    const tezos = new TezosToolkit(tezosNodeAddress);
+
+    tezos.setProvider({
+        signer: new InMemorySigner(privateKey)
+    });
+
+    try {
+        // Withdraw the funds
+        const contract = await tezos.contract.at(contractAddress);
+
+        const op = await contract.methodsObject.do(withdrawFromKT1(address, amount)).send();
+
+        // Confirm the transaction
+        const confirmation = await op.confirmation(1);
+        console.log(`Transaction successfully included in block: ${confirmation}`);
+        console.log(`Operation hash: ${op.opHash}`);
+        return op.opHash;
+    } catch (error) {
+        console.error(`Error in withdrawing tez: ${error}`);
+        throw error
+    }
+}
+
+export async function getDelegatorContracts(tz1Address: string) {
+    try {
+        const response = await fetch(`https://api.tzkt.io/v1/accounts/${tz1Address}/contracts`);
+
+        const delegationContracts = await response.json();
+        return delegationContracts
+            .filter((contract: any) => contract.kind === 'delegator_contract')
+            .map((delegationContract: { address: string; balance: string; }) => ({
+                contractAddress: delegationContract.address,
+                balance: delegationContract.balance
+            }));
+    } catch (error) {
+        console.error('Error fetching delegation contracts:', error);
+        throw error;
+    }
+}
+
+
+const withdrawFromKT1 = (managerAddress: string, amountInMutez: string) => {
+    return [
+        {
+            "prim":"DROP"
+        },
+        {
+            "prim":"NIL",
+            "args":[
+                {
+                "prim":"operation"
+                }
+            ]
+        },
+        {
+            "prim":"PUSH",
+            "args":[
+                {
+                "prim":"key_hash"
+                },
+                {
+                "string": managerAddress
+                }
+            ]
+        },
+        {
+            "prim":"IMPLICIT_ACCOUNT"
+        },
+        {
+            "prim":"PUSH",
+            "args":[
+                {
+                "prim": "mutez"
+                },
+                {
+                "int": amountInMutez
+                }
+            ]
+        },
+        {
+            "prim":"UNIT"
+        },
+        {
+            "prim":"TRANSFER_TOKENS"
+        },
+        {
+            "prim":"CONS"
+        }
+    ]
+}
