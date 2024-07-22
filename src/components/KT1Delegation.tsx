@@ -31,11 +31,15 @@ const DelegationContractDetails = ({
     disabled: boolean;
 }) => {
 
+    const contractAddressLink = `https://tzkt.io/${contractAddress}/operations`
+
     return(
         <div>
             <p>
                 <span className='font-bold'> Contract Address: </span>
-                { contractAddress}
+                <a href={contractAddressLink} target='_blank' rel='noopener noreferrer' className='break-all'>
+                    { contractAddress}
+                </a>
             </p>
             <p className='pb-8'>
                 <span className='font-bold'> Balance: </span>
