@@ -21,7 +21,7 @@
     "email": "info@cryptonomic.tech"
   },
   "build": {
-    "appId": "tech.cryptonomic.galleon",
+    "appId": "tech.galleon-wallet.galleon",
     "productName": "Galleon",
     "files": [
       "public/**/*",
@@ -37,11 +37,16 @@
     "mac": {
       "target": [
         "dmg",
-        "zip"
+        "mas"
       ],
       "hardenedRuntime": true,
       "entitlements": "./entitlements/entitlements.mac.plist",
-      "entitlementsInherit": "./entitlements/entitlements.mac.plist"
+      "entitlementsInherit": "./entitlements/entitlements.mac.plist",
+      "icon": "icon.png",
+      "provisioningProfile": "/Users/vishakh/Downloads/Galleon_DMG.provisionprofile",
+      "notarize": {
+        "teamId": "G7QQMG8Q65"
+      }
     },
     "dmg": {
       "sign": true
