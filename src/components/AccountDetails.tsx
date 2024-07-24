@@ -6,15 +6,18 @@ const refreshIcon = require('../assets/refresh_icon.png').default;
 
 const AccountDetails = ({
     walletAddress,
-    tezosNodeAddress
+    tezosNodeAddress,
+    setIsRefresh
 }: {
     walletAddress: string;
     tezosNodeAddress: string;
+    setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const [accountBalance, setAccountBalance] = useState<number | undefined>();
     const [currentDelegate, setCurrentDelegate] = useState<string | null>('');
 
     const handleRefresh = async () => {
+        setIsRefresh(prevState => !prevState);
         try {
             if(walletAddress) {
                 const client = new RpcClient(tezosNodeAddress);

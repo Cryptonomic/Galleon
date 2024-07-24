@@ -22,6 +22,7 @@ const Home: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [walletFileContents, setWalletFileContents] = useState<string>('');
     const [isWalletOpen, setIsWalletOpen] = useState(false);
+    const [isRefresh, setIsRefresh] = useState(false);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files ? event.target.files[0] : null;
@@ -68,6 +69,7 @@ const Home: React.FC = () => {
                 <AccountDetails
                     walletAddress={address}
                     tezosNodeAddress={tezosNodeAddress}
+                    setIsRefresh={setIsRefresh}
                 />
                 <AssetLinks walletAddress={address} />
                 <Send
@@ -85,7 +87,7 @@ const Home: React.FC = () => {
                 />
 
                 <KT1Delegation
-                    { ...{ walletFileContents, isWalletOpen, tezosNodeAddress }}
+                    { ...{ walletFileContents, isWalletOpen, tezosNodeAddress, isRefresh }}
                     walletAddress={address}
                 />
             </div>

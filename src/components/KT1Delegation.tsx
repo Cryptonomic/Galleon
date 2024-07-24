@@ -58,12 +58,14 @@ const KT1Delegation = ({
     walletFileContents,
     isWalletOpen,
     tezosNodeAddress,
-    walletAddress
+    walletAddress,
+    isRefresh
 }:{
     walletFileContents: string;
     isWalletOpen: boolean;
     tezosNodeAddress: string;
     walletAddress: string;
+    isRefresh: boolean;
 }) => {
 
     const [error, setError] = useState<string | null>(null);
@@ -111,7 +113,7 @@ const KT1Delegation = ({
                 }
             }
         })()
-    }, [walletAddress])
+    }, [walletAddress, isRefresh])
 
 
     return (
