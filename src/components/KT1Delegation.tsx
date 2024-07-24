@@ -79,6 +79,7 @@ const KT1Delegation = ({
     const [amount, setAmount] = useState('');
 
     const handleWithdrawal = async() => {
+        setIsTXResultModal(true);
         try {
             if (walletFileContents) {
                 const txHash = await withdraw(
