@@ -166,7 +166,7 @@ export async function withdraw(
         // Withdraw the funds
         const contract = await tezos.contract.at(contractAddress);
 
-        const amountInMutez = new BigNumber(amountInTez).dividedBy(1000000).toString()
+        const amountInMutez = new BigNumber(amountInTez).multipliedBy(1000000).toString()
         const op = await contract.methodsObject.do(withdrawFromKT1(address, amountInMutez)).send();
 
         // Confirm the transaction
