@@ -37,7 +37,7 @@ const DelegationContractDetails = ({
         <div>
             <p>
                 <span className='font-bold'> Contract Address: </span>
-                <a href={contractAddressLink} target='_blank' rel='noopener noreferrer' className='break-all'>
+                <a href={contractAddressLink} target='_blank' rel='noopener noreferrer' className='break-all text-sky-30'>
                     { contractAddress}
                 </a>
             </p>
@@ -126,18 +126,18 @@ const KT1Delegation = ({
             {delegationContracts && delegationContracts.length > 0
                 ? <>
                     <div className='flex justify-between'>
-                    <p className='font-bold text-lg'> Delegation Contracts </p>
-                    <a
-                            href={'https://discourse.cryptonomic.tech/t/i-m-unable-to-withdraw-tez-from-my-delegated-kt-account-to-my-manager-account-is-there-something-wrong/213'}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='flex gap-1 font-medium'
-                        >
-                            <span>
-                                Having issue withdrawing?
-                            </span>
-                            <img src={openIcon} alt='open' className='w-6 h-6' />
-                    </a>
+                        <p className='font-bold text-lg'> Delegation Contracts </p>
+                        <a
+                                href={'https://discourse.cryptonomic.tech/t/i-m-unable-to-withdraw-tez-from-my-delegated-kt-account-to-my-manager-account-is-there-something-wrong/213'}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='flex gap-1 font-medium text-sky-40'
+                            >
+                                <span>
+                                    Having issue withdrawing?
+                                </span>
+                                <img src={openIcon} alt='open' className='w-6 h-6' />
+                        </a>
                     </div>
                     {delegationContracts.map(({ contractAddress, balance }, index) => (
                         <>
