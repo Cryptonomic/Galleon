@@ -27,7 +27,7 @@ const DelegationContractDetails = ({
 }:{
     contractAddress: string;
     balance: number;
-    onClickWithdraw: (amount: string) => void;
+    onClickWithdraw: (amountInTez: string) => void;
     disabled: boolean;
 }) => {
 
@@ -47,7 +47,7 @@ const DelegationContractDetails = ({
             </p>
             <Amount
                 buttonText={'Withdraw'}
-                onButtonClick={(amount) => onClickWithdraw(amount)}
+                onButtonClick={(amountInTez) => onClickWithdraw(amountInTez)}
                 disabled={disabled}
             />
         </div>
@@ -76,7 +76,7 @@ const KT1Delegation = ({
     const [currentContractAddress, setCurrentContractAddress] = useState('');
     const [delegationContracts, setDelegationContracts] = useState([]);
 
-    const [amount, setAmount] = useState('');
+    const [amountInTez, setAmountInTez] = useState('');
 
     const handleWithdrawal = async() => {
         setIsTXResultModal(true);
@@ -86,7 +86,7 @@ const KT1Delegation = ({
                     walletFileContents,
                     passphrase,
                     currentContractAddress,
-                    amount,
+                    amountInTez,
                     tezosNodeAddress
                 );
                 setTxHash(txHash);
@@ -96,7 +96,7 @@ const KT1Delegation = ({
             setIsTXResultModal(false);
         } finally {
             setPassphrase('');
-            setAmount('');
+            setAmountInTez('');
         }
     }
 
@@ -145,8 +145,8 @@ const KT1Delegation = ({
                                 key={index}
                                 contractAddress={contractAddress}
                                 balance={balance / 1000000}
-                                onClickWithdraw={(amount) => {
-                                    setAmount(amount);
+                                onClickWithdraw={(amountInTez) => {
+                                    setAmountInTez(amountInTez);
                                     setIsPasswordModal(true);
                                     setCurrentContractAddress(contractAddress);
                                 }}

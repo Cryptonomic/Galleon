@@ -1,3 +1,4 @@
+import BigNumber from "bignumber.js";
 import {EncryptedWalletVersionOne, KeyStore} from "../types/WalletTypes";
 import {pwhash, open} from './SodiumUtils';
 
@@ -149,7 +150,7 @@ export async function withdraw(
     walletFileContents: string,
     passphrase: string,
     contractAddress: string,
-    amount: string,
+    amountInTez: string,
     tezosNodeAddress: string
 ): Promise<string> {
 
@@ -165,7 +166,8 @@ export async function withdraw(
         // Withdraw the funds
         const contract = await tezos.contract.at(contractAddress);
 
-        const op = await contract.methodsObject.do(withdrawFromKT1(address, amount)).send();
+        const amountInMutez = new BigNumber(amountInTez).dividedBy(1000000).toString()
+        const op = await contract.methodsObject.do(withdrawFromKT1(address, amountInMutez)).send();
 
         // Confirm the transaction
         const confirmation = await op.confirmation(1);
