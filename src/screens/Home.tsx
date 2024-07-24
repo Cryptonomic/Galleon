@@ -69,6 +69,7 @@ const Home: React.FC = () => {
                 <AccountDetails
                     walletAddress={address}
                     tezosNodeAddress={tezosNodeAddress}
+                    isRefresh={isRefresh}
                     setIsRefresh={setIsRefresh}
                 />
                 <AssetLinks walletAddress={address} />
@@ -76,6 +77,7 @@ const Home: React.FC = () => {
                     tezosNodeAddress={tezosNodeAddress}
                     walletFileContents={walletFileContents}
                     isWalletOpen={isWalletOpen}
+                    setIsRefresh={setIsRefresh}
                 />
                 <Delegate
                     tezosNodeAddress={tezosNodeAddress}
@@ -87,7 +89,7 @@ const Home: React.FC = () => {
                 />
 
                 <KT1Delegation
-                    { ...{ walletFileContents, isWalletOpen, tezosNodeAddress, isRefresh }}
+                    { ...{ walletFileContents, isWalletOpen, tezosNodeAddress, isRefresh, setIsRefresh }}
                     walletAddress={address}
                 />
             </div>

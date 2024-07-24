@@ -59,13 +59,15 @@ const KT1Delegation = ({
     isWalletOpen,
     tezosNodeAddress,
     walletAddress,
-    isRefresh
+    isRefresh,
+    setIsRefresh
 }:{
     walletFileContents: string;
     isWalletOpen: boolean;
     tezosNodeAddress: string;
     walletAddress: string;
     isRefresh: boolean;
+    setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 
     const [error, setError] = useState<string | null>(null);
@@ -92,6 +94,7 @@ const KT1Delegation = ({
                     tezosNodeAddress
                 );
                 setTxHash(txHash);
+                setIsRefresh(prevState => !prevState);
             }
         } catch (error: any) {
             setError('Failed to delegate: ' + error.message);
