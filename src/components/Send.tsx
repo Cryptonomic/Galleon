@@ -10,11 +10,13 @@ import PasswordModal from './PasswordModal';
 const Send = ({
     tezosNodeAddress,
     walletFileContents,
-    isWalletOpen
+    isWalletOpen,
+    setIsRefresh
 }: {
     tezosNodeAddress: string;
     walletFileContents: string;
     isWalletOpen: boolean;
+    setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const [recipientAddress, setRecipientAddress] = useState('');
     const [amount, setAmount] = useState('');
@@ -43,6 +45,7 @@ const Send = ({
                 );
                 clearInputFields();
                 setTxHash(txHash);
+                setIsRefresh(prevState => !prevState);
             }
         } catch (error: any) {
             setError('Failed to send transaction: ' + error.message);

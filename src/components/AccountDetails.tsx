@@ -6,10 +6,14 @@ const refreshIcon = require('../assets/refresh_icon.png').default;
 
 const AccountDetails = ({
     walletAddress,
-    tezosNodeAddress
+    tezosNodeAddress,
+    isRefresh,
+    setIsRefresh
 }: {
     walletAddress: string;
     tezosNodeAddress: string;
+    isRefresh: boolean;
+    setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const [accountBalance, setAccountBalance] = useState<number | undefined>();
     const [currentDelegate, setCurrentDelegate] = useState<string | null>('');
@@ -32,7 +36,7 @@ const AccountDetails = ({
 
     useEffect(() => {
         handleRefresh();
-    }, [walletAddress]);
+    }, [walletAddress, isRefresh]);
 
     return (
         <div className='bg-sky-30 text-white flex flex-col gap-2 py-4 px-6 border border-grey-10 rounded-lg'>
@@ -43,7 +47,7 @@ const AccountDetails = ({
                 </p>
                 <Button
                     text={'Refresh'}
-                    onButtonClick={handleRefresh}
+                    onButtonClick={() => setIsRefresh(prevState => !prevState)}
                     disabled={!walletAddress}
                     iconSrc={refreshIcon}
                 />

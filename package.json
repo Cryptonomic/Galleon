@@ -98,6 +98,7 @@
     "@taquito/rpc": "^20.0.1",
     "@taquito/signer": "^20.0.1",
     "@taquito/taquito": "^20.0.1",
+    "bignumber.js": "^9.1.2",
     "bs58check": "^4.0.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
