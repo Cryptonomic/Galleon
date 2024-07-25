@@ -172,8 +172,8 @@ export async function withdraw(
         // Confirm the transaction
         const confirmation = await op.confirmation(1);
         console.log(`Transaction successfully included in block: ${confirmation}`);
-        console.log(`Operation hash: ${op.opHash}`);
-        return op.opHash;
+        console.log(`Operation hash: ${op.hash}`);
+        return op.hash;
     } catch (error) {
         console.error(`Error in withdrawing tez: ${error}`);
         throw error
