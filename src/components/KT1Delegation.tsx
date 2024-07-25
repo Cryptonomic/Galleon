@@ -1,58 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Amount from './Amount';
 import PasswordModal from './PasswordModal';
 import TXResultModal from './TXResultModal';
 import ErrorModal from './ErrorModal';
 import { getDelegatorContracts, withdraw } from '../utils/WalletUtils';
+import EmptyDelegationState from './EmptyDelegationState';
+import DelegationContractDetails from './DelegationContractDetails';
 
 const openIcon = require('../assets/open.png').default;
-
-const EmptyDelegationState = () => {
-    return(
-        <div className='w-[498px] text-lg'>
-            <p className='font-bold text-lg'> Legacy KT1 Delegation Contracts </p>
-            <div className='flex flex-col gap-7 py-7'>
-                <p className='text-sky-70'> No legacy KT1 delegation contracts found. </p>
-                <p className='text-sky-70'> Legacy KT1 contracts were an older way to delegate funds. You no longer need to use them.</p>
-            </div>
-        </div>
-    )
-}
-
-const DelegationContractDetails = ({
-    contractAddress,
-    balance,
-    onClickWithdraw,
-    disabled
-}:{
-    contractAddress: string;
-    balance: number;
-    onClickWithdraw: (amountInTez: string) => void;
-    disabled: boolean;
-}) => {
-
-    const contractAddressLink = `https://tzkt.io/${contractAddress}/operations`
-
-    return(
-        <div>
-            <p>
-                <span className='font-bold'> Contract Address: </span>
-                <a href={contractAddressLink} target='_blank' rel='noopener noreferrer' className='break-all text-sky-30'>
-                    { contractAddress}
-                </a>
-            </p>
-            <p className='pb-8'>
-                <span className='font-bold'> Balance: </span>
-                { balance }  ꜩ
-            </p>
-            <Amount
-                buttonText={'Withdraw'}
-                onButtonClick={(amountInTez) => onClickWithdraw(amountInTez)}
-                disabled={disabled}
-            />
-        </div>
-    )
-}
 
 const KT1Delegation = ({
     walletFileContents,

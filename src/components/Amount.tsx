@@ -5,13 +5,16 @@ import Button from './Button';
 const Amount = ({
     buttonText,
     onButtonClick,
+    amount,
+    setAmount,
     disabled,
 }: {
     buttonText: string;
-    onButtonClick: (amount: string) => void;
+    onButtonClick: () => void;
+    amount: string;
+    setAmount: React.Dispatch<React.SetStateAction<string>>;
     disabled?: boolean;
 }) => {
-    const [amount, setAmount] = useState('');
 
     return (
         <div className='flex flex-wrap items-end gap-y-2 gap-x-8'>
@@ -29,7 +32,7 @@ const Amount = ({
             />
             <Button
                 text={buttonText}
-                onButtonClick={() => onButtonClick(amount)}
+                onButtonClick={onButtonClick}
                 disabled={!amount || disabled}
             />
         </div>
