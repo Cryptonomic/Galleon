@@ -19,7 +19,6 @@ const AccountDetails = ({
     const [currentDelegate, setCurrentDelegate] = useState<string | null>('');
 
     const handleRefresh = async () => {
-        setIsRefresh(prevState => !prevState);
         try {
             if(walletAddress) {
                 const client = new RpcClient(tezosNodeAddress);
@@ -48,7 +47,7 @@ const AccountDetails = ({
                 </p>
                 <Button
                     text={'Refresh'}
-                    onButtonClick={handleRefresh}
+                    onButtonClick={() => setIsRefresh(prevState => !prevState)}
                     disabled={!walletAddress}
                     iconSrc={refreshIcon}
                 />
